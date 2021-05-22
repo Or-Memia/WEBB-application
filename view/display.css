@@ -1,0 +1,45 @@
+#table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#table td, #table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#table tr:hover {
+    background-color: #ddd;
+}
+
+#table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: blue;
+    color: white;
+}
+.desc {
+    text-align: left;
+    font-family: Calibri;
+    font-size: 18px;
+
+}
+
+.time {
+    text-align: center;
+    font-family: Calibri;
+    font-size: 18px;
+}
+.table-title{
+    text-align: center;
+    font-family: Calibri;
+    text-shadow: 1px 1px blue;
+    text-emphasis-style: double-circle;
+    font-weight: bold;
+}
+

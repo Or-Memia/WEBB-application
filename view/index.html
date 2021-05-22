@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="index.css">
+    <title>Anomaly Detection</title>
+    <script type="module"></script>
+</head>
+<body class="all-page">
+<h1 class="header">Anomaly Detector | Home</h1>
+<form action="/detect" method="post" enctype="multipart/form-data" name="searchForm" target="result">
+    <label for="selectedAlgo" class="choose-algorithm">Choose algorithm</label><br/>
+    <select id="selectedAlgo" class="select-algorithm" name="selectedAlgo" size="2">
+        <option selected value="linear">Linear</option>
+        <option value="hybrid">Hybrid</option>
+    </select><br><br>
+    <table>
+        <tr>
+            <td id="learnError" class="error-text"></td>
+            <td><input type="file" id="learnFile" class="file-button" name="learnFile"></td>
+            <td>Please enter training set</td>
+        </tr>
+        <tr>
+            <td id="anomalyError" class="error-text"></td>
+            <td><input type="file" id="anomalyFile" class="file-button" name="anomalyFile"></td>
+            <td>Please enter test set</td>
+        </tr>
+    </table>
+    <br>
+    <input type="button"  id="upload" class="upload-button" value="check files" onclick="uploadFiles()">
+    <div id="submit"></div>
+    <script src="checkFiles.js"></script>
+</form>
+<iframe class="frame" name="result" width="1670" height="450"></iframe>
+<br>
+</body>
+</html>
