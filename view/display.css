@@ -1,8 +1,8 @@
-#table {
+#error_result {
     font-family: "Brush Script MT";
     border-collapse: collapse;
     width: 100%;
-    border: 1px solid black;
+    border: 1px solid #4e16b6;
     color: white;
 }
 
@@ -19,21 +19,20 @@
 /*    background-color: #ddd;*/
 /*}*/
 
-#table th {
+#error_result th {
     padding-top: 15px;
     padding-bottom: 15px;
     /*background-color: #4e16b6;*/
     border: #4e16b6;
     color: white;
 }
-.desc {
+.info {
     text-align: center;
     font-family: "Comic Sans MS";
     font-size: 25px;
-
 }
 
-.time {
+.row {
     text-align: center;
     font-family: "Comic Sans MS";
     font-size: 25px;
@@ -41,6 +40,7 @@
 .table-title{
     text-align: center;
     font-family: "Comic Sans MS";
+    color: #4e16b6;
     /*text-shadow: 1px 1px #3611bd;*/
     /*text-emphasis-style: double-circle;*/
     font-weight: bold;
