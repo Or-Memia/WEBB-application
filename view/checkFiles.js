@@ -2,7 +2,7 @@
 
     let correctLearn = false, correctAnomaly = false;
     if (document.getElementById("learnFile").files.length === 0) {
-        document.getElementById("learnError").innerHTML = "Please choose a learn file";
+        document.getElementById("learnError").innerHTML = "Enter train file";
     } else {
         let learn = document.getElementById("learnFile").files[0].name;
         let size = learn.length;
@@ -11,11 +11,11 @@
             correctLearn = true;
             document.getElementById("learnError").innerHTML = "";
         } else {
-            document.getElementById("learnError").innerHTML = "This file must be a CSV file";
+            document.getElementById("learnError").innerHTML = "Invalid file format";
         }
     }
     if (document.getElementById("anomalyFile").files.length === 0) {
-        document.getElementById("anomalyError").innerHTML = "Please choose an anomaly file";
+        document.getElementById("anomalyError").innerHTML = "Enter test file";
     } else {
         let anomaly = document.getElementById("anomalyFile").files[0].name;
         let size = anomaly.length;
@@ -24,7 +24,7 @@
             correctAnomaly = true;
             document.getElementById("anomalyError").innerHTML = "";
         } else {
-            document.getElementById("anomalyError").innerHTML = "This file must be a CSV file";
+            document.getElementById("anomalyError").innerHTML = "Invalid file format";
         }
     }
     if (!(correctAnomaly && correctLearn)){
