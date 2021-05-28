@@ -24,7 +24,7 @@ app.post('/', (req, res) => {
     //get values from view
     let trainFile = req.files.learnFile
     let anomalyFile = req.files.anomalyFile
-    let algorithmType = req.body.selectedAlgo
+    let algorithmType = req.body.chosenAlgorithm
     model.detectAnomalies(trainFile.data.toString(), anomalyFile.data.toString(), algorithmType).then((result) => {
         res.contentType("application/json")
         res.send(JSON.stringify(result.anomalies))
@@ -43,8 +43,8 @@ app.post('/detect', (req, res) => {
         //create the post request
         data.append("learnFile", req.files.learnFile.data)
         data.append("anomalyFile", req.files.anomalyFile.data)
-        data.append("selectedAlgo", req.body.selectedAlgo)
-        console.log(req.body.selectedAlgo);
+        data.append("chosenAlgorithm", req.body.chosenAlgorithm)
+        console.log(req.body.chosenAlgorithm);
         fetch(('http://localhost:8080/'), {
             method: 'POST',
             body: data

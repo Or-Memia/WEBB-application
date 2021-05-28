@@ -9,11 +9,12 @@
 <body class="all-page">
 <h1 class="header">Anomaly Detector | Home</h1>
 <form action="/detect" method="post" enctype="multipart/form-data" name="searchForm" target="result">
-    <label for="selectedAlgo" class="radio-buttons-center">Choose algorithm</label><br/>
-    <input class="radio-buttons-center" type="radio" id="Linear" name="selectedAlgo" value="linear">
-    <label for="selectedAlgo">Linear</label><br>
-    <input class="radio-buttons-center" type="radio" id="Hybrid" name="selectedAlgo" value="hybrid">
-    <label for="selectedAlgo">Hybrid</label><br>
+    <label class="radio-buttons-center">Choose algorithm</label><br/>
+    <input class="radio-buttons-center" type="radio" id="Hybrid" name="selectedAlgo" value="hybrid" checked>
+    <label>Hybrid</label><br>
+    <input class="radio-buttons-center" type="radio" id="Linear" name="chosenAlgorithm" value="linear">
+    <label >Linear</label><br>
+
 <!--    <select id="selectedAlgo" class="select-algorithm" name="selectedAlgo" size="2">-->
 <!--        <option selected value="linear">Linear</option>-->
 <!--        <option value="hybrid">Hybrid</option>-->
