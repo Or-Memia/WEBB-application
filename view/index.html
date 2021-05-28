@@ -10,10 +10,14 @@
 <h1 class="header">Anomaly Detector | Home</h1>
 <form action="/detect" method="post" enctype="multipart/form-data" name="searchForm" target="result">
     <label for="selectedAlgo" class="choose-algorithm">Choose algorithm</label><br/>
-    <select id="selectedAlgo" class="select-algorithm" name="selectedAlgo" size="2">
-        <option selected value="linear">Linear</option>
-        <option value="hybrid">Hybrid</option>
-    </select><br><br>
+    <input type="radio" id="male" name="selectedAlgo" value="linear">
+    <label for="selectedAlgo">Linear</label><br>
+    <input type="radio" id="Hybrid" name="selectedAlgo" value="hybrid">
+    <label for="selectedAlgo">Hybrid</label><br>
+<!--    <select id="selectedAlgo" class="select-algorithm" name="selectedAlgo" size="2">-->
+<!--        <option selected value="linear">Linear</option>-->
+<!--        <option value="hybrid">Hybrid</option>-->
+<!--    </select><br><br>-->
     <table>
         <tr>
             <td id="learnError" class="error-text"></td>

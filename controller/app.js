@@ -31,6 +31,8 @@ app.post('/', (req, res) => {
         res.end()
     })
 })
+
+console.log("Hello World");
 //Post Method for '/search' url
 app.post('/detect', (req, res) => {
     if (req.files) {
@@ -42,6 +44,7 @@ app.post('/detect', (req, res) => {
         data.append("learnFile", req.files.learnFile.data)
         data.append("anomalyFile", req.files.anomalyFile.data)
         data.append("selectedAlgo", req.body.selectedAlgo)
+        console.log(req.body.selectedAlgo);
         fetch(('http://localhost:8080/'), {
             method: 'POST',
             body: data
