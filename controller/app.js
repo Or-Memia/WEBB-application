@@ -54,7 +54,6 @@ function appPostAnomalies() {
 appPostAnomalies();
 
 console.log("Hello World");
-
 function WriteRows(lineReaderStreamer, res) {
     let row = lineReaderStreamer.next()
     // TODO: why 22
@@ -67,19 +66,15 @@ function WriteRows(lineReaderStreamer, res) {
 
 function postInfo(res, result) {
     const lineReaderStreamer = new lineReader(path.join(__dirname, '../view/AnomalyResults.html'));
-
     let row = WriteRows(lineReaderStreamer, res);
-
     let template = {
         "<>": "tr", "html": [
             {"<>": "td", "html": "${description}"},
             {"<>": "td", "style": "text-align: center", "html": "${timeStep}"},
         ]
     }
-
     let report = JSON.stringify(result);
     let html = json2html.render(report, template);
-
     res.write(html)
     while (row = lineReaderStreamer.next()) {
         res.write(row)
@@ -90,9 +85,7 @@ function postInfo(res, result) {
 function AppPostTableResults() {
     app.post('/detect', (req, res) => {
         if (req.files) {
-
             const AnomaliesDetectorInput = new FormData()
-
             AnomaliesDetectorInput.append("trainSetInput", req.files.trainSetInput.data)
             AnomaliesDetectorInput.append("testSetInput", req.files.testSetInput.data)
             AnomaliesDetectorInput.append("chosenAlgorithm", req.body.chosenAlgorithm)
@@ -102,7 +95,6 @@ function AppPostTableResults() {
                 body: AnomaliesDetectorInput
             }).then(result => result.json())
                 .then((result) => {
-
                     postInfo(res, result);
                 })
         }
