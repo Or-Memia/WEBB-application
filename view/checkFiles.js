@@ -11,12 +11,8 @@ function deleteInvalidFiles(testFlag, trainFlag) {
     }
 }
 
-  function detectAnomalies() {
-
-    let trainFlag = false, testFlag = false;
-    if (document.getElementById("learnFile").files.length === 0) {
-        document.getElementById("learnError").innerHTML = "Enter train file";
-    } else {
+function checkTrainFile(trainFlag) {
+    if (document.getElementById("learnFile").files.length !== 0) {
         let trainFile = document.getElementById("learnFile").files[0].name;
         let trainSize = trainFile.length;
         let train_suffix = trainFile.substr(trainSize - 4, trainSize);
@@ -26,10 +22,14 @@ function deleteInvalidFiles(testFlag, trainFlag) {
         } else {
             document.getElementById("learnError").innerHTML = "Invalid file format";
         }
-    }
-    if (document.getElementById("anomalyFile").files.length === 0) {
-        document.getElementById("anomalyError").innerHTML = "Enter test file";
     } else {
+        document.getElementById("learnError").innerHTML = "Enter train file";
+    }
+    return trainFlag;
+}
+
+function checkTestFile(testFlag) {
+    if (document.getElementById("anomalyFile").files.length !== 0) {
         let testFile = document.getElementById("anomalyFile").files[0].name;
         let testSize = testFile.length;
         let test_suffix = testFile.substr(testSize - 4, testSize);
@@ -39,7 +39,17 @@ function deleteInvalidFiles(testFlag, trainFlag) {
         } else {
             document.getElementById("anomalyError").innerHTML = "Invalid file format";
         }
+    } else {
+        document.getElementById("anomalyError").innerHTML = "Enter test file";
     }
-      deleteInvalidFiles(testFlag, trainFlag);
+    return testFlag;
+}
+
+function detectAnomalies() {
+
+    let trainFlag = false, testFlag = false;
+    trainFlag = checkTrainFile(trainFlag);
+    testFlag = checkTestFile(testFlag);
+    deleteInvalidFiles(testFlag, trainFlag);
 
   }
