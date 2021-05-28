@@ -1,4 +1,13 @@
 const csvExtention = '.csv';
+function updateElementById(elementId, newVal) {
+    document.getElementById(elementId).innerHTML = newVal;
+}
+
+function getFileName(filename) {
+    let trainFile = document.getElementById(filename).files[0].name;
+    return trainFile;
+}
+
 function deleteInvalidFiles(testFlag, trainFlag) {
     if (!(testFlag && trainFlag)) {
         if (document.getElementById("trainSetInput").files.length !== 0) {
@@ -12,10 +21,9 @@ function deleteInvalidFiles(testFlag, trainFlag) {
     }
 }
 
-function getFileName(filename) {
-    let trainFile = document.getElementById(filename).files[0].name;
-    return trainFile;
-}
+
+
+
 
 function checkTrainFile(trainFlag) {
     if (document.getElementById("trainSetInput").files.length !== 0) {
@@ -24,12 +32,13 @@ function checkTrainFile(trainFlag) {
         let train_suffix = getFileExtention(trainFile, trainSize);
         if (train_suffix === csvExtention) {
             trainFlag = true;
-            document.getElementById("trainSetInvalid").innerHTML = "";
+            updateElementById("trainSetInvalid", "");
         } else {
-            document.getElementById("trainSetInvalid").innerHTML = "Invalid file format";
+            console.log(trainFlag)
+            updateElementById("trainSetInvalid", "Invalid file format");
         }
     } else {
-        document.getElementById("trainSetInvalid").innerHTML = "Enter train file";
+        updateElementById("trainSetInvalid", "Enter train file");
     }
     return trainFlag;
 }
@@ -48,20 +57,21 @@ function checkTestFile(testFlag) {
         let test_suffix = getFileExtention(testFile, testSize);
         if (test_suffix === csvExtention) {
             testFlag = true;
-            document.getElementById("testSetInvalid").innerHTML = "";
+            updateElementById("testSetInvalid", "");
         } else {
-            document.getElementById("testSetInvalid").innerHTML = "Invalid file format";
+            updateElementById("testSetInvalid", "Invalid file format");
         }
     } else {
-        document.getElementById("testSetInvalid").innerHTML = "Enter test file";
+        updateElementById("testSetInvalid", "Enter test file");
     }
     return testFlag;
 }
 
 function detectAnomalies() {
-
+    console.log("hello")
     let trainFlag = false, testFlag = false;
     trainFlag = checkTrainFile(trainFlag);
+    console.log(trainFlag);
     testFlag = checkTestFile(testFlag);
     deleteInvalidFiles(testFlag, trainFlag);
 
