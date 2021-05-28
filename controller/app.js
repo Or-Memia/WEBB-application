@@ -32,12 +32,17 @@ function AppGet() {
 
 AppGet();
 
+function getRequestVals(req) {
+    let trainFile = req.files.trainSetInput
+    let testSetInput = req.files.testSetInput
+    let algorithmType = req.body.chosenAlgorithm
+    return {trainFile, testSetInput, algorithmType};
+}
+
 function appPostAnomalies() {
     app.post('/', (req, res) => {
         //get values from view
-        let trainFile = req.files.trainSetInput
-        let testSetInput = req.files.testSetInput
-        let algorithmType = req.body.chosenAlgorithm
+        let {trainFile, testSetInput, algorithmType} = getRequestVals(req);
         model.detectAnomalies(trainFile.data.toString(), testSetInput.data.toString(), algorithmType).then((result) => {
             res.contentType("application/json")
             res.send(JSON.stringify(result.anomalies))
@@ -50,15 +55,20 @@ appPostAnomalies();
 
 console.log("Hello World");
 
-function postInfo(res, result) {
-    const lineReaderStreamer = new lineReader(path.join(__dirname, '../view/AnomalyResults.html'));
-
+function WriteRows(lineReaderStreamer, res) {
     let row = lineReaderStreamer.next()
     // TODO: why 22
     for (let i = 0; i < 22; i++) {
         res.write(row)
         row = lineReaderStreamer.next()
     }
+    return row;
+}
+
+function postInfo(res, result) {
+    const lineReaderStreamer = new lineReader(path.join(__dirname, '../view/AnomalyResults.html'));
+
+    let row = WriteRows(lineReaderStreamer, res);
 
     let template = {
         "<>": "tr", "html": [

@@ -23,8 +23,6 @@ function deleteInvalidFiles(testFlag, trainFlag) {
 
 
 
-
-
 function checkTrainFile(trainFlag) {
     if (document.getElementById("trainSetInput").files.length !== 0) {
         let trainFile = getFileName("trainSetInput");
