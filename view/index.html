@@ -6,7 +6,7 @@
     <title>Anomaly Detection Server</title>
     <script type="module"></script>
 </head>
-<body class="background">
+<body class="homepageBackground">
 <h1 class="head_title">Anomaly Detector Server | Home</h1>
 <form action="/detect" method="post" enctype="multipart/form-data" name="searchForm" target="result" onsubmit="return detectAnomalies()">
     <label class="radio-buttons-center">Please click the desired algorithm you wish to apply</label><br/>
@@ -28,6 +28,7 @@
     </table>
     <br>
     <div id="submit">
+<!--        an upload btn - if the files are valid the preocess will be started, otherwise the user will se an -->
         <input type="submit" class="upload-button" value="Upload" >
     </div>
     <script src="UploadBtn.js"></script>
