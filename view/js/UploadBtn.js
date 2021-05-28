@@ -12,11 +12,16 @@ function deleteInvalidFiles(testFlag, trainFlag) {
     }
 }
 
+function getFileName(filename) {
+    let trainFile = document.getElementById(filename).files[0].name;
+    return trainFile;
+}
+
 function checkTrainFile(trainFlag) {
     if (document.getElementById("trainSetInput").files.length !== 0) {
-        let trainFile = document.getElementById("trainSetInput").files[0].name;
+        let trainFile = getFileName("trainSetInput");
         let trainSize = trainFile.length;
-        let train_suffix = trainFile.substr(trainSize - 4, trainSize);
+        let train_suffix = getFileExtention(trainFile, trainSize);
         if (train_suffix === csvExtention) {
             trainFlag = true;
             document.getElementById("trainSetInvalid").innerHTML = "";
@@ -36,7 +41,7 @@ function getFileExtention(testFile, testSize) {
 
 function checkTestFile(testFlag) {
     if (document.getElementById("testSetInput").files.length !== 0) {
-        let testFile = document.getElementById("testSetInput").files[0].name;
+        let testFile = getFileName("testSetInput");
         let testSize = testFile.length;
 
         // get the file extention
