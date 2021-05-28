@@ -1,14 +1,27 @@
-  function uploadFiles() {
+function deleteInvalidFiles(testFlag, trainFlag) {
+    if (!(testFlag && trainFlag)) {
+        if (document.getElementById("learnFile").files.length !== 0) {
+            delete document.getElementById("learnFile").files
+            document.getElementById('learnFile').value = "";
+        }
+        if (document.getElementById("anomalyFile").files.length !== 0) {
+            delete document.getElementById("anomalyFile").files
+            document.getElementById('anomalyFile').value = "";
+        }
+    }
+}
 
-    let correctLearn = false, correctAnomaly = false;
+  function detectAnomalies() {
+
+    let trainFlag = false, testFlag = false;
     if (document.getElementById("learnFile").files.length === 0) {
         document.getElementById("learnError").innerHTML = "Enter train file";
     } else {
-        let learn = document.getElementById("learnFile").files[0].name;
-        let size = learn.length;
-        let suffix = learn.substr(size - 4, size);
-        if (suffix === '.csv') {
-            correctLearn = true;
+        let trainFile = document.getElementById("learnFile").files[0].name;
+        let trainSize = trainFile.length;
+        let train_suffix = trainFile.substr(trainSize - 4, trainSize);
+        if (train_suffix === '.csv') {
+            trainFlag = true;
             document.getElementById("learnError").innerHTML = "";
         } else {
             document.getElementById("learnError").innerHTML = "Invalid file format";
@@ -17,25 +30,16 @@
     if (document.getElementById("anomalyFile").files.length === 0) {
         document.getElementById("anomalyError").innerHTML = "Enter test file";
     } else {
-        let anomaly = document.getElementById("anomalyFile").files[0].name;
-        let size = anomaly.length;
-        let suffix = anomaly.substr(size - 4, size);
-        if (suffix === '.csv') {
-            correctAnomaly = true;
+        let testFile = document.getElementById("anomalyFile").files[0].name;
+        let testSize = testFile.length;
+        let test_suffix = testFile.substr(testSize - 4, testSize);
+        if (test_suffix === '.csv') {
+            testFlag = true;
             document.getElementById("anomalyError").innerHTML = "";
         } else {
             document.getElementById("anomalyError").innerHTML = "Invalid file format";
         }
     }
-    if (!(correctAnomaly && correctLearn)){
-        if (document.getElementById("learnFile").files.length !== 0){
-            delete document.getElementById("learnFile").files
-            document.getElementById('learnFile').value = "";
-        }
-        if(document.getElementById("anomalyFile").files.length !== 0){
-            delete document.getElementById("anomalyFile").files
-            document.getElementById('anomalyFile').value = "";
-        }
-    }
+      deleteInvalidFiles(testFlag, trainFlag);
 
-}
+  }
