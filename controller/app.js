@@ -19,7 +19,7 @@ app.use(express.static('view'))
 
 //Get Method for '/' url
 app.get('/', (req, res) => {
-    res.sendFile('index.html')
+    res.sendFile('view/index.html')
 })
 app.post('/', (req, res) => {
     //get values from view

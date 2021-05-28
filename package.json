@@ -4,7 +4,7 @@
   "main": "./controller/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon /controller/app.js"
+    "server": "nodemon /controller/app.js"
   },
   "repository": {
     "type": "git",
