@@ -22,11 +22,13 @@
                 <button style="margin-left: 650px; display:block;width:120px; height:30px; color: red; background-color: aqua; font-family: 'Berlin Sans FB'" onclick="document.getElementById('learnFile').click()">Upload train set</button>
                 <input type="file" id="learnFile" class="file-button" name="learnFile" style="display:none">
             </td>
-        </tr>
-        <tr>
+<!--        </tr>-->
+<!--        <tr>-->
             <td id="anomalyError" class="error-text"></td>
-            <td><input type="file" id="anomalyFile" class="file-button" name="anomalyFile"></td>
-            <td>Please enter test set</td>
+            <td>
+                <button style="margin-left: 100px; display:block;width:120px; height:30px; color: red; background-color: aqua; font-family: 'Berlin Sans FB'" onclick="document.getElementById('anomalyFile').click()">Upload test set</button>
+                <input type="file" id="anomalyFile" class="file-button" name="anomalyFile" style="display:none">
+            </td>
         </tr>
     </table>
     <br>
