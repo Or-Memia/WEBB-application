@@ -63,13 +63,13 @@ const createCsvFile = (data, name) => {
     return path;
 }
 
-const detectAnomalies = async (trainFile, anomalyFile, type) => {
+const detectAnomalies = async (trainFile, testSetInput, type) => {
 
     let data = trainFile.toString().split("\n");
     let keys = fillCsvKeys(data);
     let values = fillCsvValues(data.length - 2, keys.length, data);
     let trainPath = createCsvFile(data = trainFile.toString(), "train")
-    let anomalyPath = createCsvFile(anomalyFile.toString(), "anomaly")
+    let anomalyPath = createCsvFile(testSetInput.toString(), "anomaly")
     let tsTrain = new TimeSeries(trainPath);
     let algorithm;
     if (type === 'linear') {

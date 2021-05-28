@@ -24,9 +24,9 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
     //get values from view
     let trainFile = req.files.trainSetInput
-    let anomalyFile = req.files.anomalyFile
+    let testSetInput = req.files.testSetInput
     let algorithmType = req.body.chosenAlgorithm
-    model.detectAnomalies(trainFile.data.toString(), anomalyFile.data.toString(), algorithmType).then((result) => {
+    model.detectAnomalies(trainFile.data.toString(), testSetInput.data.toString(), algorithmType).then((result) => {
         res.contentType("application/json")
         res.send(JSON.stringify(result.anomalies))
         res.end()
@@ -70,7 +70,7 @@ app.post('/detect', (req, res) => {
         const AnomaliesDetectorInput = new FormData()
 
         AnomaliesDetectorInput.append("trainSetInput", req.files.trainSetInput.data)
-        AnomaliesDetectorInput.append("anomalyFile", req.files.anomalyFile.data)
+        AnomaliesDetectorInput.append("testSetInput", req.files.testSetInput.data)
         AnomaliesDetectorInput.append("chosenAlgorithm", req.body.chosenAlgorithm)
         // console.log(req.body.chosenAlgorithm);
         fetch(('http://localhost:8080/'), {
