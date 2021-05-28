@@ -18,13 +18,13 @@
     font-family: "Comic Sans MS";
     font-size: 25px;
 }
-
+/*style for */
 .info {
     text-align: center;
     font-family: "Comic Sans MS";
     font-size: 25px;
 }
-
+/*style for error message*/
 #error_result th {
     padding-top: 15px;
     padding-bottom: 15px;

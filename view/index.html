@@ -3,25 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/homePage.css">
+<!--    the title that show in web tab -->
     <title>Anomaly Detection Server</title>
     <script type="module"></script>
 </head>
+<!--the web background (image)-->
 <body class="homepageBackground">
+<!--the head title of the web-->
 <h1 class="head_title">Anomaly Detector Server | Home</h1>
 <form action="/detect" method="post" enctype="multipart/form-data" name="searchForm" target="result" onsubmit="return detectAnomalies()">
+<!--    the select algorithm the user need to choose from the defult is hybrid-->
     <label class="radio-buttons-center">Please click the desired algorithm you wish to apply</label><br/>
     <input class="radio-buttons-center" type="radio" id="Hybrid" name="chosenAlgorithm" value="hybrid" checked>
     <label>Hybrid Algorithm</label><br>
     <input class="radio-buttons-center" type="radio" id="Linear" name="chosenAlgorithm" value="linear">
-    <label >Linear Regression Algorithm</label><br><br><br>
+    <label >Linear Regression Algorithm</label>
+<!--    to separate lines between the different parts-->
+    <br><br><br>
+<!--  using table for collect al the data about the given files  -->
     <table>
         <tr>
+<!--            if the file is not CSV show on the web error message-->
             <td id="trainSetInvalid" class="Invalidwarning"></td>
             <td>
+<!--                the train file is enter here-->
                 <input type="file" id="trainSetInput" name="trainSetInput" style="display:block">
             </td>
+<!--            if the file is not CSV show on the web error message-->
             <td id="testSetInvalid" class="Invalidwarning"></td>
             <td>
+<!--                the test file is enter here-->
                 <input type="file" id="testSetInput" name="testSetInput" style="display:block">
             </td>
         </tr>
@@ -29,10 +40,11 @@
     <br>
     <div id="submit">
 <!--        an upload btn - if the files are valid the preocess will be started, otherwise the user will se an -->
-        <input type="submit" class="upload-button" value="Upload" >
+        <input type="submit" class="uploadFilesButton" value="Upload" >
     </div>
     <script src="js/UploadBtn.js"></script>
 </form>
+<!--result are in the left side of the screen-->
 <iframe class="frame" name="result" width="50%" height="450"></iframe>
 <br>
 </body>

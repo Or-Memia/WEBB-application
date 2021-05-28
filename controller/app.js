@@ -59,8 +59,7 @@ function WriteRows(lineReaderStreamer, res) {
     // TODO: why 22
     for (let i = 0; i < 22; i++) {
         res.write(row)
-        row = lineReaderStreamer.next()
-    }
+        row = lineReaderStreamer.next()}
     return row;
 }
 
@@ -77,8 +76,7 @@ function postInfo(res, result) {
     let html = json2html.render(report, template);
     res.write(html)
     while (row = lineReaderStreamer.next()) {
-        res.write(row)
-    }
+        res.write(row)}
     res.end()
 }
 
