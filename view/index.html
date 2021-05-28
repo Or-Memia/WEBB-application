@@ -18,8 +18,10 @@
     <table>
         <tr>
             <td id="learnError" class="error-text"></td>
-            <td><input type="file" id="learnFile" class="file-button" name="learnFile"></td>
-            <td>Please enter training set</td>
+            <td>
+                <button style="margin-left: 650px; display:block;width:120px; height:30px; color: red; background-color: aqua; font-family: 'Berlin Sans FB'" onclick="document.getElementById('learnFile').click()">Upload train set</button>
+                <input type="file" id="learnFile" class="file-button" name="learnFile" style="display:none">
+            </td>
         </tr>
         <tr>
             <td id="anomalyError" class="error-text"></td>
