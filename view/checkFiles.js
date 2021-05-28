@@ -32,6 +32,10 @@
             delete document.getElementById("learnFile").files
             document.getElementById('learnFile').value = "";
         }
+        if(document.getElementById("anomalyFile").files.length !== 0){
+            delete document.getElementById("anomalyFile").files
+            document.getElementById('anomalyFile').value = "";
+        }
             // let removeButton = document.getElementById("upload");
         // removeButton.remove();
         // document.getElementById("submit").innerHTML = '    <input type="submit" class="upload-button" value="check & upload files" >'
