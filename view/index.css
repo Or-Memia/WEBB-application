@@ -1,32 +1,31 @@
-.all-page {
-    /*background-color: lightpink;*/
+.background {
     background-image: url("254381.jpg");
     background-size: cover;
 }
 
-.header {
-    /*margin-left: 600px;*/
+.head_title {
     font-family: Harrington;
-    text-shadow: #4e16b6;
+    /*text-shadow: #4e16b6;*/
+    color: #4e16b6;
 }
 
-.file-button {
-    margin-left: 650px;
-    font-weight: bold;
-    font-family: Calibri;
-    display: inline-block;
-    border-radius: 4px;
-    background-color: #4e16b6;
-    border: none;
-    color: #4e16b6;
-    text-align: center;
-    font-size: 15px;
-    padding: 10px;
-    width: 250px;
-    transition: all 0.5s;
-    cursor: pointer;
-  /*  position: sticky;*/
-}
+/*.file-button {*/
+/*    margin-left: 650px;*/
+/*    font-weight: bold;*/
+/*    font-family: Calibri;*/
+/*    display: inline-block;*/
+/*    border-radius: 4px;*/
+/*    background-color: #4e16b6;*/
+/*    border: none;*/
+/*    color: #4e16b6;*/
+/*    text-align: center;*/
+/*    font-size: 15px;*/
+/*    padding: 10px;*/
+/*    width: 250px;*/
+/*    transition: all 0.5s;*/
+/*    cursor: pointer;*/
+/*  !*  position: sticky;*!*/
+/*}*/
 
 /*.file-button:hover{*/
 /*    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);*/
@@ -46,26 +45,26 @@
     font-weight: bold;
     font-size: 25px;
     text-align: center;
-    font-family: Calibri;
+    font-family: "Comic Sans MS";
     /*text-shadow: 1px 1px #3f0cc9;*/
     /*text-emphasis-style: double-circle;*/
     color: #4e16b6;
 }
 
-.select-algorithm {
-    font-family: Calibri;
-    background-color: #4e16b6;
-    color: #FFFFFF;
-    font-weight: bold;
-    margin-left: 730px;
-    margin-top: 10px;
-    width: 130px;
-    font-size: 20px;
-}
+/*.select-algorithm {*/
+/*    font-family: "Comic Sans MS";*/
+/*    background-color: #4e16b6;*/
+/*    color: #FFFFFF;*/
+/*    font-weight: bold;*/
+/*    margin-left: 730px;*/
+/*    margin-top: 10px;*/
+/*    width: 130px;*/
+/*    font-size: 20px;*/
+/*}*/
 
 .upload-button {
-    font-family: Calibri;
-    border-radius: 4px;
+    font-family: "Comic Sans MS";
+    border-radius: 3px;
     border: none;
     background-color: #4e16b6;
     color: #FFFFFF;
