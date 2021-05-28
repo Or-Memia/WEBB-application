@@ -1,13 +1,13 @@
 function importModules() {
-    const express = require('express')
-    const json2html = require('node-json2html');
-    const fileUpload = require('express-fileupload')
-    const model = require('../model/detectAnomalies')
-    const lineReader = require('n-readlines');
-    const FormData = require('form-data')
-    const fetch = require('node-fetch')
-    const path = require('path');
-    return {express, json2html, fileUpload, model, lineReader, FormData, fetch, path};
+    const myExpress = require('express')
+    const convertJsonToHtml = require('node-json2html');
+    const myFileUpload = require('express-fileupload')
+    const myModel = require('../model/detectAnomalies')
+    const readLines = require('n-readlines');
+    const resultData = require('form-data')
+    const myFetch = require('node-fetch')
+    const myPath = require('path');
+    return {express: myExpress, json2html: convertJsonToHtml, fileUpload: myFileUpload, model: myModel, lineReader: readLines, FormData: resultData, fetch: myFetch, path: myPath};
 }
 
 const {express, json2html, fileUpload, model, lineReader, FormData, fetch, path} = importModules();
@@ -87,20 +87,15 @@ function postInfo(res, result) {
     res.end()
 }
 
-function GetAnomaliesInput(req) {
-    const AnomaliesDetectorInput = new FormData()
-
-    AnomaliesDetectorInput.append("trainSetInput", req.files.trainSetInput.data)
-    AnomaliesDetectorInput.append("testSetInput", req.files.testSetInput.data)
-    AnomaliesDetectorInput.append("chosenAlgorithm", req.body.chosenAlgorithm)
-    return AnomaliesDetectorInput;
-}
-
 function AppPostTableResults() {
     app.post('/detect', (req, res) => {
         if (req.files) {
 
-            const AnomaliesDetectorInput = GetAnomaliesInput(req);
+            const AnomaliesDetectorInput = new FormData()
+
+            AnomaliesDetectorInput.append("trainSetInput", req.files.trainSetInput.data)
+            AnomaliesDetectorInput.append("testSetInput", req.files.testSetInput.data)
+            AnomaliesDetectorInput.append("chosenAlgorithm", req.body.chosenAlgorithm)
             console.log(req.body.chosenAlgorithm);
             fetch(('http://localhost:8080/'), {
                 method: 'POST',
