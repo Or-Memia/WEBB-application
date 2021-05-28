@@ -8,6 +8,7 @@ const FormData = require('form-data')
 const fetch= require('node-fetch')
 const path = require('path');
 const app = express()
+const serverPort = 8080;
 
 //define app uses
 app.use(express.urlencoded({
@@ -33,52 +34,54 @@ app.post('/', (req, res) => {
 })
 
 console.log("Hello World");
+
+function postInfo(res, result) {
+    const lineReaderStreamer = new lineReader(path.join(__dirname, '../view/display.html'));
+
+    let row = lineReaderStreamer.next()
+    // TODO: why 22
+    for (let i = 0; i < 22; i++) {
+        res.write(row)
+        row = lineReaderStreamer.next()
+    }
+
+    let template = {
+        "<>": "tr", "html": [
+            {"<>": "td", "html": "${description}"},
+            {"<>": "td", "style": "text-align: center", "html": "${timeStep}"},
+        ]
+    }
+
+    //
+    let report = JSON.stringify(result);
+    let html = json2html.render(report, template);
+
+    res.write(html)
+    while (row = lineReaderStreamer.next()) {
+        res.write(row)
+    }
+    res.end()
+}
+
 //Post Method for '/search' url
 app.post('/detect', (req, res) => {
     if (req.files) {
 
-        // pass values to the model
-        const data = new FormData()
+        const AnomaliesDetectorInput = new FormData()
 
-        //create the post request
-        data.append("learnFile", req.files.learnFile.data)
-        data.append("anomalyFile", req.files.anomalyFile.data)
-        data.append("chosenAlgorithm", req.body.chosenAlgorithm)
+        AnomaliesDetectorInput.append("learnFile", req.files.learnFile.data)
+        AnomaliesDetectorInput.append("anomalyFile", req.files.anomalyFile.data)
+        AnomaliesDetectorInput.append("chosenAlgorithm", req.body.chosenAlgorithm)
         // console.log(req.body.chosenAlgorithm);
         fetch(('http://localhost:8080/'), {
             method: 'POST',
-            body: data
+            body: AnomaliesDetectorInput
         }).then(result => result.json())
             .then((result) => {
 
-                const readLine = new lineReader(path.join(__dirname, '../view/display.html'));
-
-                //read from the html file
-                let line = readLine.next()
-                for (let i = 0; i < 22; i++) {
-                    res.write(line)
-                    line = readLine.next()
-                }
-
-                let template = {
-                    "<>": "tr", "html": [
-                        {"<>": "td", "html": "${description}"},
-                        {"<>": "td", "style": "text-align: center", "html": "${timeStep}"},
-                    ]
-                }
-
-                //
-                let report = JSON.stringify(result);
-                let html = json2html.render(report, template);
-
-                res.write(html)
-                while (line = readLine.next()) {
-                    res.write(line)
-                }
-                res.end()
+                postInfo(res, result);
             })
     }
 })
 
-//starting server on port 8080
-app.listen(8080, () => console.log("server started at 8080"))
+app.listen(serverPort, () => console.log("Go to http://localhost:8080"))
