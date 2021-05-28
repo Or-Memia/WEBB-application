@@ -19,9 +19,11 @@ function deleteInvalidFiles(testFlag, trainFlag) {
         if (document.getElementById("testSetInput").files.length !== 0) {
             delete document.getElementById("testSetInput").files
             document.getElementById('testSetInput').value = "";}
+        // Hide the results if invalid input was given
         document.getElementById("table").style.display = "none";
     }else
     {
+        // if everything is ok - reveal the table results
         document.getElementById("table").style.display = "block";
     }
 }
