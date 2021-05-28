@@ -2,12 +2,13 @@
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    border: 1px solid black;
 }
 
-#table td, #table th {
-    border: 1px solid #ddd;
-    padding: 8px;
-}
+/*#table td, #table th {*/
+/*    border: 1px solid #ddd;*/
+/*    padding: 8px;*/
+/*}*/
 
 /*#table tr:nth-child(even) {*/
 /*    background-color: #f2f2f2;*/

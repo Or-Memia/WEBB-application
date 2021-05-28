@@ -44,7 +44,7 @@ app.post('/detect', (req, res) => {
         data.append("learnFile", req.files.learnFile.data)
         data.append("anomalyFile", req.files.anomalyFile.data)
         data.append("chosenAlgorithm", req.body.chosenAlgorithm)
-        console.log(req.body.chosenAlgorithm);
+        // console.log(req.body.chosenAlgorithm);
         fetch(('http://localhost:8080/'), {
             method: 'POST',
             body: data

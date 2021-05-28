@@ -27,10 +27,16 @@
             document.getElementById("anomalyError").innerHTML = "This file must be a CSV file";
         }
     }
-    if (correctAnomaly && correctLearn){
-        let removeButton = document.getElementById("upload");
-        removeButton.remove();
-        document.getElementById("submit").innerHTML = '    <input type="submit" class="upload-button" value="upload files" >'
+    if (!(correctAnomaly && correctLearn)){
+        if (document.getElementById("learnFile").files.length !== 0){
+            delete document.getElementById("learnFile").files
+            document.getElementById('learnFile').value = "";
+        }
+            // let removeButton = document.getElementById("upload");
+        // removeButton.remove();
+        // document.getElementById("submit").innerHTML = '    <input type="submit" class="upload-button" value="check & upload files" >'
+        // correctLearn = false;
+        // correctAnomaly = false;
     }
 
 }
