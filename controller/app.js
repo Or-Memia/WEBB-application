@@ -87,15 +87,20 @@ function postInfo(res, result) {
     res.end()
 }
 
+function GetAnomaliesInput(req) {
+    const AnomaliesDetectorInput = new FormData()
+
+    AnomaliesDetectorInput.append("trainSetInput", req.files.trainSetInput.data)
+    AnomaliesDetectorInput.append("testSetInput", req.files.testSetInput.data)
+    AnomaliesDetectorInput.append("chosenAlgorithm", req.body.chosenAlgorithm)
+    return AnomaliesDetectorInput;
+}
+
 function AppPostTableResults() {
     app.post('/detect', (req, res) => {
         if (req.files) {
 
-            const AnomaliesDetectorInput = new FormData()
-
-            AnomaliesDetectorInput.append("trainSetInput", req.files.trainSetInput.data)
-            AnomaliesDetectorInput.append("testSetInput", req.files.testSetInput.data)
-            AnomaliesDetectorInput.append("chosenAlgorithm", req.body.chosenAlgorithm)
+            const AnomaliesDetectorInput = GetAnomaliesInput(req);
             console.log(req.body.chosenAlgorithm);
             fetch(('http://localhost:8080/'), {
                 method: 'POST',
