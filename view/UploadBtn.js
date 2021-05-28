@@ -18,12 +18,12 @@ function checkTrainFile(trainFlag) {
         let train_suffix = trainFile.substr(trainSize - 4, trainSize);
         if (train_suffix === '.csv') {
             trainFlag = true;
-            document.getElementById("learnError").innerHTML = "";
+            document.getElementById("trainSetInvalid").innerHTML = "";
         } else {
-            document.getElementById("learnError").innerHTML = "Invalid file format";
+            document.getElementById("trainSetInvalid").innerHTML = "Invalid file format";
         }
     } else {
-        document.getElementById("learnError").innerHTML = "Enter train file";
+        document.getElementById("trainSetInvalid").innerHTML = "Enter train file";
     }
     return trainFlag;
 }
@@ -35,12 +35,12 @@ function checkTestFile(testFlag) {
         let test_suffix = testFile.substr(testSize - 4, testSize);
         if (test_suffix === '.csv') {
             testFlag = true;
-            document.getElementById("anomalyError").innerHTML = "";
+            document.getElementById("testSetInvalid").innerHTML = "";
         } else {
-            document.getElementById("anomalyError").innerHTML = "Invalid file format";
+            document.getElementById("testSetInvalid").innerHTML = "Invalid file format";
         }
     } else {
-        document.getElementById("anomalyError").innerHTML = "Enter test file";
+        document.getElementById("testSetInvalid").innerHTML = "Enter test file";
     }
     return testFlag;
 }
