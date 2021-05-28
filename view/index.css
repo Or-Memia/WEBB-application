@@ -4,7 +4,7 @@
 }
 
 .header {
-    margin-left: 600px;
+    /*margin-left: 600px;*/
     font-family: Harrington;
     text-shadow: 1px 1px blue;
 }
@@ -32,7 +32,8 @@
 }
 
 .error-text{
-    margin-left: 350px;
+    /*margin-left: 350px;*/
+    margin-top: 30px;
     position: fixed;
     color: red;
     font-weight: bold;
@@ -40,7 +41,7 @@
 }
 
 .radio-buttons-center {
-    margin-left: 700px;
+    /*margin-left: 700px;*/
     font-weight: bold;
     font-size: 25px;
     text-align: center;
@@ -74,7 +75,8 @@
     height: 50px;
     transition: all 0.5s;
     cursor: pointer;
-    margin-left: 730px;
+    margin-top: 50px;
+    margin-left: 100px;
 }
 
 .upload-button:hover {

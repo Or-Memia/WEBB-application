@@ -36,11 +36,6 @@
             delete document.getElementById("anomalyFile").files
             document.getElementById('anomalyFile').value = "";
         }
-            // let removeButton = document.getElementById("upload");
-        // removeButton.remove();
-        // document.getElementById("submit").innerHTML = '    <input type="submit" class="upload-button" value="check & upload files" >'
-        // correctLearn = false;
-        // correctAnomaly = false;
     }
 
 }
