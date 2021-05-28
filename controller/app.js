@@ -36,7 +36,7 @@ app.post('/', (req, res) => {
 console.log("Hello World");
 
 function postInfo(res, result) {
-    const lineReaderStreamer = new lineReader(path.join(__dirname, '../view/display.html'));
+    const lineReaderStreamer = new lineReader(path.join(__dirname, '../view/AnomalyResults.html'));
 
     let row = lineReaderStreamer.next()
     // TODO: why 22
