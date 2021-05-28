@@ -1,8 +1,8 @@
 function deleteInvalidFiles(testFlag, trainFlag) {
     if (!(testFlag && trainFlag)) {
-        if (document.getElementById("learnFile").files.length !== 0) {
-            delete document.getElementById("learnFile").files
-            document.getElementById('learnFile').value = "";
+        if (document.getElementById("trainSetInput").files.length !== 0) {
+            delete document.getElementById("trainSetInput").files
+            document.getElementById('trainSetInput').value = "";
         }
         if (document.getElementById("anomalyFile").files.length !== 0) {
             delete document.getElementById("anomalyFile").files
@@ -12,8 +12,8 @@ function deleteInvalidFiles(testFlag, trainFlag) {
 }
 
 function checkTrainFile(trainFlag) {
-    if (document.getElementById("learnFile").files.length !== 0) {
-        let trainFile = document.getElementById("learnFile").files[0].name;
+    if (document.getElementById("trainSetInput").files.length !== 0) {
+        let trainFile = document.getElementById("trainSetInput").files[0].name;
         let trainSize = trainFile.length;
         let train_suffix = trainFile.substr(trainSize - 4, trainSize);
         if (train_suffix === '.csv') {
