@@ -3,6 +3,7 @@
     border-collapse: collapse;
     width: 100%;
     border: 1px solid black;
+    color: white;
 }
 
 /*#table td, #table th {*/
@@ -21,25 +22,25 @@
 #table th {
     padding-top: 12px;
     padding-bottom: 12px;
-    background-color: blue;
+    background-color: #4e16b6;
     color: white;
 }
 .desc {
-    text-align: left;
+    text-align: center;
     font-family: Calibri;
-    font-size: 18px;
+    font-size: 25px;
 
 }
 
 .time {
     text-align: center;
     font-family: Calibri;
-    font-size: 18px;
+    font-size: 25px;
 }
 .table-title{
     text-align: center;
     font-family: Calibri;
-    text-shadow: 1px 1px blue;
+    text-shadow: 1px 1px #3611bd;
     text-emphasis-style: double-circle;
     font-weight: bold;
 }
