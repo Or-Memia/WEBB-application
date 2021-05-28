@@ -55,18 +55,23 @@ appPostAnomalies();
 
 console.log("Hello World");
 function WriteRows(lineReaderStreamer, res) {
-    let row = lineReaderStreamer.next()
-    // TODO: why 22
-    for (let i = 0; i < 22; i++) {
+    let row;
+    row = lineReaderStreamer.next();
+    let i;
+    for (i = 0; i < 22; i++)
+    {
         res.write(row)
-        row = lineReaderStreamer.next()}
+        row = lineReaderStreamer.next()
+    }
     return row;
 }
 
 function postInfo(res, result) {
-    const lineReaderStreamer = new lineReader(path.join(__dirname, '../view/AnomalyResults.html'));
+    let lineReaderStreamer;
+    lineReaderStreamer = new lineReader(path.join(__dirname, '../view/AnomalyResults.html'));
     let row = WriteRows(lineReaderStreamer, res);
-    let template = {
+    let template =
+        {
         "<>": "tr", "html": [
             {"<>": "td", "html": "${description}"},
             {"<>": "td", "style": "text-align: center", "html": "${timeStep}"},
@@ -80,13 +85,18 @@ function postInfo(res, result) {
     res.end()
 }
 
+function getInput(req) {
+    const AnomaliesDetectorInput = new FormData()
+    AnomaliesDetectorInput.append("trainSetInput", req.files.trainSetInput.data)
+    AnomaliesDetectorInput.append("testSetInput", req.files.testSetInput.data)
+    AnomaliesDetectorInput.append("chosenAlgorithm", req.body.chosenAlgorithm)
+    return AnomaliesDetectorInput;
+}
+
 function AppPostTableResults() {
     app.post('/detect', (req, res) => {
         if (req.files) {
-            const AnomaliesDetectorInput = new FormData()
-            AnomaliesDetectorInput.append("trainSetInput", req.files.trainSetInput.data)
-            AnomaliesDetectorInput.append("testSetInput", req.files.testSetInput.data)
-            AnomaliesDetectorInput.append("chosenAlgorithm", req.body.chosenAlgorithm)
+            const AnomaliesDetectorInput = getInput(req);
             console.log(req.body.chosenAlgorithm);
             fetch(('http://localhost:8080/'), {
                 method: 'POST',
