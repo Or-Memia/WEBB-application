@@ -67,7 +67,6 @@ function postInfo(res, result) {
         ]
     }
 
-    //
     let report = JSON.stringify(result);
     let html = json2html.render(report, template);
 
@@ -100,7 +99,6 @@ function AppPostTableResults() {
     })
 }
 
-//Post Method for '/search' url
 AppPostTableResults();
 
 app.listen(serverPort, () => console.log("Go to http://localhost:8080"))
