@@ -1,27 +1,22 @@
-function importModules() {
-    const myExpress = require('express')
-    const convertJsonToHtml = require('node-json2html');
-    const myFileUpload = require('express-fileupload')
-    const myModel = require('../model/detectAnomalies')
-    const readLines = require('n-readlines');
-    const resultData = require('form-data')
-    const myFetch = require('node-fetch')
-    const myPath = require('path');
-    return {express: myExpress, json2html: convertJsonToHtml, fileUpload: myFileUpload, model: myModel, lineReader: readLines, FormData: resultData, fetch: myFetch, path: myPath};
-}
-
 const lineNumberTableInHtml = 24;
 
-const {express, json2html, fileUpload, model, lineReader, FormData, fetch, path} = importModules();
-const app = express()
+const {myExpress, convertJsonToHtml, myFileUpload, model, lineReader, FormData, fetch, path} = importModules();
+const app = myExpress()
 const serverPort = 8080;
-
+const resultsTableHtml =
+    {
+        "<>": "tr", "html":
+            [
+                {"<>": "td", "html": "${description}"},
+                {"<>": "td", "style": "text-align: center", "html": "${timeStep}"},
+            ]
+    }
 function StartAppUsing() {
-    app.use(express.urlencoded({
+    app.use(myExpress.urlencoded({
         extended: false
     }))
-    app.use(fileUpload({}))
-    app.use(express.static('view'))
+    app.use(myFileUpload({}))
+    app.use(myExpress.static('view'))
 }
 
 StartAppUsing();
@@ -72,15 +67,9 @@ function postInfo(res, result) {
     let lineReaderStreamer;
     lineReaderStreamer = new lineReader(path.join(__dirname, '../view/AnomalyResults.html'));
     let row = WriteRows(lineReaderStreamer, res);
-    let template =
-        {
-        "<>": "tr", "html": [
-            {"<>": "td", "html": "${description}"},
-            {"<>": "td", "style": "text-align: center", "html": "${timeStep}"},
-        ]
-    }
+
     let report = JSON.stringify(result);
-    let html = json2html.render(report, template);
+    let html = convertJsonToHtml.render(report, resultsTableHtml);
     res.write(html)
     while (row = lineReaderStreamer.next()) {
         res.write(row)}
@@ -112,5 +101,17 @@ function AppPostTableResults() {
 }
 
 AppPostTableResults();
+
+function importModules() {
+    const myExpress = require('express')
+    const convertJsonToHtml = require('node-json2html');
+    const myFileUpload = require('express-fileupload')
+    const myModel = require('../model/detectAnomalies')
+    const readLines = require('n-readlines');
+    const resultData = require('form-data')
+    const myFetch = require('node-fetch')
+    const myPath = require('path');
+    return {myExpress: myExpress, convertJsonToHtml: convertJsonToHtml, myFileUpload: myFileUpload, model: myModel, lineReader: readLines, FormData: resultData, fetch: myFetch, path: myPath};
+}
 
 app.listen(serverPort, () => console.log("Go to http://localhost:8080"))
