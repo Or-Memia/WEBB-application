@@ -10,6 +10,8 @@ function importModules() {
     return {express: myExpress, json2html: convertJsonToHtml, fileUpload: myFileUpload, model: myModel, lineReader: readLines, FormData: resultData, fetch: myFetch, path: myPath};
 }
 
+const lineNumberTableInHtml = 24;
+
 const {express, json2html, fileUpload, model, lineReader, FormData, fetch, path} = importModules();
 const app = express()
 const serverPort = 8080;
@@ -58,7 +60,7 @@ function WriteRows(lineReaderStreamer, res) {
     let row;
     row = lineReaderStreamer.next();
     let i;
-    for (i = 0; i < 22; i++)
+    for (i = 0; i < lineNumberTableInHtml; i++)
     {
         res.write(row)
         row = lineReaderStreamer.next()
