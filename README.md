@@ -24,6 +24,7 @@ On the right side of table is the ```LINE``` that represents the anomaly line. <
 
 <br>
 
+
 <br>
 
 # Before We Start
