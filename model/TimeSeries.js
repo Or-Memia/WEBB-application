@@ -1,53 +1,78 @@
-const fs = require('fs')
+const fs = require('fs');
 
-class TimeSeries {
-    constructor(CSVFileName) {
-        try {
-            this.mapValues = {}
-            // read contents of the file
-            const data = fs.readFileSync(CSVFileName, 'utf8');
+class TimeSeries{
 
-            // split the contents by new line
-            const lines = data.split(/\r?\n/).filter((line) => line.trim().length > 0);
+    constructor(CSVFile){
+        const csv = fs.readFileSync(CSVFile, { encoding: 'utf8', flag: 'r' });
+        this.numOfFeatures = 0;
+        let lines = csv.split(/\r?\n/).filter((line) => line.trim().length > 0);
+        this.numOfLines = lines.length;
+        this.feature = lines[0].split(',');
+        this.numOfFeatures = this.feature.length;
+        this.data = [];
+        //split each word by comma into strings
+        for (let i = 0; i < this.numOfLines; i++) {
+            var cells = lines[i].split(",");
+            this.data.push(cells);
 
-            this.keys = lines[0].split(",");
-            const numOfKeys = this.keys.length
+        }
+        //transpose matrix
+        this.matrix = new Array(this.numOfFeatures);
 
-            for (let i = 0; i < numOfKeys; i++) {
-                this.mapValues[this.keys[i]] = []
+        for (let i = 0; i < this.numOfFeatures; ++i) {
+            this.matrix[i] = new Array(this.numOfLines - 1);
+        }
+
+        for (let i = 0; i < this.numOfFeatures; i++) {
+            for (let j = 1; j < this.numOfLines; j++) {
+                this.matrix[i][j - 1] = this.data[j][i];
             }
-
-            for (let i = 1; i < lines.length; i++) {
-                const splitLine = lines[i].split(",");
-                for (let j = 0; j < this.keys.length; j++) {
-                    this.mapValues[this.keys[j]].push(splitLine[j])
-                }
-            }
-            this.numOfValuesRows = lines.length - 1;
-        } catch (err) {
-            console.error(err);
         }
     }
 
-    getAttributeData(name) {
-        return this.mapValues[name];
+    get_vector_Matrix(i) {
+        return this.matrix[i];
+    }
+    getMatrix() {
+        return this.matrix;
     }
 
-    gettAttributes() {
-        return this.keys;
+    getFeature() {
+        return this.feature;
     }
 
-    getRowSize() {
-        return this.mapValues[this.keys[0]].length;
+    getNumOfFeatures() {
+        return this.numOfFeatures;
     }
 
-    getNumOfValuesRows(){
-        return this.numOfValuesRows;
+    getNumOfLines() {
+        return this.numOfLines;
     }
 
-    getMap(){
-        return this.mapValues
+    featureLocation(feature) {
+        for (let i = 0; i < this.numOfFeatures; i++) {
+            if (this.data[0][i] === feature) {
+                return i;
+            }
+        }
+        console.log('no match feature');
     }
+
+    getRowValuesOfFeature(feature) {
+        let location = this.featureLocation(feature);
+        return this.get_vector_Matrix(location);
+    }
+
+    getNumOfInfoLines(){
+        return this.numOfLines - 1;
+    }
+
 }
 
-module.exports = TimeSeries
+module.exports= TimeSeries;
+
+
+
+
+
+

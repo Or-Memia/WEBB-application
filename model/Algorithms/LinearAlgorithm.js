@@ -16,18 +16,18 @@ class LinearAlgorithm {
     }
 
     learnNormal(ts){
-        let atts = ts.gettAttributes()
+        let atts = ts.getFeature()
 
         //init vals
         let vals = new Array(atts.length)
-        let numOfRows= ts.getNumOfValuesRows()
+        let numOfRows= ts.getNumOfInfoLines()
         for (let i = 0; i < atts.length; i++){
             vals[i] = new Array(numOfRows);
         }
 
         //fill vals
         for (let i = 0; i < atts.length; i++){
-            let x = ts.getAttributeData(atts[i])
+            let x = ts.getRowValuesOfFeature(atts[i])
             for (let j = 0; j < numOfRows; j++){
                 vals[i][j] = parseFloat(x[j]);
             }
@@ -48,7 +48,7 @@ class LinearAlgorithm {
             }
 
             let f2 = atts[jMax];
-            let ps = this.toPoints(ts.getAttributeData(f1),ts.getAttributeData(f2));
+            let ps = this.toPoints(ts.getRowValuesOfFeature(f1),ts.getRowValuesOfFeature(f2));
             this.learnHelper(ts,max,f1,f2,ps);
         }
     }
@@ -65,10 +65,10 @@ class LinearAlgorithm {
         let v = [];
         for (let i = 0; i < this.#cf.length; i++){
             let currentCorrelatedFeatures = this.#cf[i];
-            let x = ts.getAttributeData(currentCorrelatedFeatures.feature1);
-            let y = ts.getAttributeData(currentCorrelatedFeatures.feature2);
+            let x = ts.getRowValuesOfFeature(currentCorrelatedFeatures.feature1);
+            let y = ts.getRowValuesOfFeature(currentCorrelatedFeatures.feature2);
             for(let j= 0; j < x.length; j++){
-                if(this.isAnomalous(x[j],y[j],currentCorrelatedFeatures)){
+                if(this.isDetect(x[j],y[j],currentCorrelatedFeatures)){
                     let d = currentCorrelatedFeatures.feature1 + " + " + currentCorrelatedFeatures.feature2;
                     v.push(new AnomalyReport(d,(j+1)));
                 }
@@ -87,7 +87,7 @@ class LinearAlgorithm {
 
     learnHelper(ts, pearson, f1, f2, points){
         if(pearson>this.#threshold){
-            let len = ts.getRowSize();
+            let len = ts.getNumOfInfoLines();
             let c = new CorrelatedFeatures();
             c.feature1=f1;
             c.feature2=f2;
@@ -98,9 +98,8 @@ class LinearAlgorithm {
         }
     }
 
-    isAnomalous(x,y, correlatedFeatures){
-        return (Math.abs(parseFloat(y) -
-            correlatedFeatures.lin_reg.f(parseFloat(x))) > parseFloat(correlatedFeatures.threshold));
+    isDetect(x, y, correlatedFeatures){
+        return (Math.abs(y - correlatedFeatures.lin_reg.f(x)) > correlatedFeatures.threshold);
     }
 
     findThreshold(points, len, rl){

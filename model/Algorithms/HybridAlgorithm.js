@@ -32,8 +32,8 @@ class HybridAlgorithm extends LinearAlgorithm{
         }
     }
 
-    isAnomalous(x, y, correlatedFeatures) {
-        return (correlatedFeatures.corrlation >= super.getThreshold() && super.isAnomalous(x,y,correlatedFeatures)) ||
+    isDetect(x, y, correlatedFeatures) {
+        return (correlatedFeatures.corrlation >= super.getThreshold() && super.isDetect(x,y,correlatedFeatures)) ||
                (correlatedFeatures.corrlation > 0.5 &&
                 correlatedFeatures.corrlation < super.getThreshold() &&
                 this.dist(new Shapes.Point(correlatedFeatures.cx, correlatedFeatures.cy),
