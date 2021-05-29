@@ -1,7 +1,7 @@
 const lineNumberTableInHtml = 24;
 
 const {myExpress, convertJsonToHtml, myFileUpload, model, lineReader, FormData, fetch, path} = importModules();
-const app = myExpress()
+const server = myExpress()
 const serverPort = 8080;
 const resultsTableHtml =
     {
@@ -31,7 +31,7 @@ function importModules() {
     return {myExpress: myExpress, convertJsonToHtml: convertJsonToHtml, myFileUpload: myFileUpload, model: myModel, lineReader: readLines, FormData: resultData, fetch: myFetch, path: myPath};
 }
 function AppPostTableResults() {
-    app.post('/detect', (req, res) => {
+    server.post('/detect', (req, res) => {
         if (req.files) {
             const AnomaliesDetectorInput = getInput(req);
             console.log(req.body.chosenAlgorithm);
@@ -47,11 +47,11 @@ function AppPostTableResults() {
     })
 }
 function StartAppUsing() {
-    app.use(myExpress.urlencoded({
+    server.use(myExpress.urlencoded({
         extended: false
     }))
-    app.use(myFileUpload({}))
-    app.use(myExpress.static('view'))
+    server.use(myFileUpload({}))
+    server.use(myExpress.static('view'))
 }
 function getInput(req) {
     const AnomaliesDetectorInput = new FormData()
@@ -92,7 +92,7 @@ function getRequestVals(req) {
     return {trainFile, testSetInput, algorithmType};
 }
 function appPostAnomalies() {
-    app.post('/', (req, res) => {
+    server.post('/', (req, res) => {
         //get values from view
         let {trainFile, testSetInput, algorithmType} = getRequestVals(req);
         model.detectAnomalies(trainFile.data.toString(), testSetInput.data.toString(), algorithmType).then((result) => {
@@ -103,7 +103,7 @@ function appPostAnomalies() {
     })
 }
 function AppGet() {
-    app.get('/', (req, res) => {
+    server.get('/', (req, res) => {
         res.sendFile('view/index.html')
     })
 }
@@ -113,6 +113,6 @@ function startWebApp() {
     appPostAnomalies();
     console.log("Hello World");
     AppPostTableResults();
-    app.listen(serverPort, () => console.log("Go to http://localhost:8080"))
+    server.listen(serverPort, () => console.log("Go to http://localhost:8080"))
 }
 
