@@ -5,7 +5,7 @@
 Anomaly Detection Server Web App designed for find and detect anomaly according to chosen algorithm. <br>
 the user choose algorithm from a radio button that he/she wish for. <br>
 the option for the user are: <br>
-Hybrid Algorithm - that are default chosen <br>
+Hybrid Algorithm - that is chosen by default. <br>
 Linear Regression Algorithm - that the user can change anytime. <br>
 
 ![step-0](https://user-images.githubusercontent.com/59093573/120069052-91dbfd00-c08c-11eb-832a-528f0314c446.png)
