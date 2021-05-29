@@ -19,7 +19,7 @@
     <input class="radio-buttons-center" type="radio" id="Linear" name="chosenAlgorithm" value="linear">
     <label >Linear Regression Algorithm</label>
 <!--    to separate lines between the different parts-->
-    <br><br><br>
+    <br><br>
 <!--  using table for collect al the data about the given files  -->
     <table>
         <tr>
@@ -27,12 +27,14 @@
             <td id="trainSetInvalid" class="Invalidwarning"></td>
             <td>
 <!--                the train file is enter here-->
+                <label> Enter Train Set</label>
                 <input type="file" id="trainSetInput" name="trainSetInput" style="display:block">
             </td>
 <!--            if the file is not CSV show on the web error message-->
             <td id="testSetInvalid" class="Invalidwarning"></td>
             <td>
 <!--                the test file is enter here-->
+                <label> Enter Test Set</label>
                 <input type="file" id="testSetInput" name="testSetInput" style="display:block">
             </td>
         </tr>
