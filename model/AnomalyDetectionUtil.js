@@ -5,71 +5,70 @@ class AnomalyDetectionUtil {
     constructor() {
     }
 
-    avg(arr) {
+    avg(x_arr) {
         let sum = 0;
-        for(let i = 0; i < arr.length; i++){
-            sum += parseFloat(arr[i]);
+        for (let i = 0; i < x_arr.length; i++) {
+            sum += x_arr[i];
         }
-        return sum / arr.length;
+        let ret = sum / (x_arr.length);
+        return ret;
     }
 
     // returns the variance of X and Y
-    var(arr) {
-        let av = this.avg(arr);
+    var(x_arr) {
+        let av = this.avg(x_arr);
         let sum = 0;
-        for (let i = 0; i < arr.length; i++) {
-            sum += parseFloat(arr[i]) * parseFloat(arr[i]);
+        for (let i = 0; i < x_arr.length; i++) {
+            sum += x_arr[i] * x_arr[i];
         }
-        return sum / arr.length - av * av;
+        let s = sum / x_arr.length;
+        let s1 = av * av;
+        let s2 = s-s1;
+        return s2;
     }
 
     // returns the covariance of X and Y
-    cov(arr1, arr2) {
+    cov(x_arr, y_arr) {
         let sum = 0;
-        let size = arr1.length;
-        let ex = this.avg(arr1, size);
-        let ey = this.avg(arr2, size);
-        for(let i = 0; i < size; i++)
-            sum = sum + (parseFloat(arr1[i]) - ex) *
-                (parseFloat(arr2[i]) - ey);
-        return sum / size;
+        for (let i = 0; i < x_arr.length; i++) {
+            sum += x_arr[i] * y_arr[i];
+        }
+        sum /= x_arr.length;
+        let temp = this.avg(x_arr) * this.avg(y_arr);
+        return sum - temp;
     }
 
     // returns the Pearson correlation coefficient of X and Y
-    pearson(arr1, arr2) {
-        let pearson = parseFloat(this.cov(arr1, arr2)) /
-            (Math.sqrt(parseFloat(this.var(arr1))) * Math.sqrt(parseFloat(this.var(arr2))));
-        if(isNaN(pearson)) {
-            return 0;
-        }else if(pearson === Infinity){
-            return 1;
-        }else{
-            return pearson;
-        }
+    pearson(x_arr, y_arr) {
+        let ret = Math.sqrt(this.var(x_arr));
+        let ret2 = ret * Math.sqrt(this.var(y_arr));
+        let ret3 = this.cov(x_arr, y_arr);
+        return ret3 / ret2;
     }
 
     // performs a linear regression and returns the Shapes equation
     linear_reg(points) {
-        let size = points.length;
-        let x = new Array(size);
-        let y = new Array(size);
-        for (let i = 0; i < size; i++) {
-            x[i] = parseFloat(points[i].x);
-            y[i] = parseFloat(points[i].y);
+        let x = [];
+        let y = [];
+        for (let i = 0; i < points.length; i++) {
+            x[i] = points[i].x;
+            y[i] = points[i].y;
         }
-        const a = this.cov(x, y) / this.var(x);
-        const b = this.avg(y)  - a * this.avg(x);
+        let a = this.cov(x, y) / this.var(x);
+        let b = this.avg(y) - a * (this.avg(x));
+
         return new Shapes.Line(a, b);
     }
 
     // returns the deviation between point p and the Shapes
     dev2(p, l) {
-        return Math.abs(parseFloat(p.y) - parseFloat(l.f(parseFloat(p.x))));
+        let ret = p.y - l.f(p.x);
+        return Math.abs(ret);
     }
 
     // returns the deviation between point p and the Shapes equation of the points
-    dev(p, points, size) {
-        let l = this.linear_reg(points, size);
+    dev(p, points) {
+        const l = this.linear_reg(points);
         return this.dev2(p, l);
     }
 }
