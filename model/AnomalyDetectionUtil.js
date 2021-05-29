@@ -1,5 +1,4 @@
 const Shapes = require("./Shapes")
-let mathjs = require('mathjs')
 
 class AnomalyDetectionUtil {
     constructor() {
@@ -10,8 +9,7 @@ class AnomalyDetectionUtil {
         for (let i = 0; i < x_arr.length; i++) {
             sum += x_arr[i];
         }
-        let ret = sum / (x_arr.length);
-        return ret;
+        return sum / (x_arr.length);
     }
 
     // returns the variance of X and Y
@@ -23,8 +21,7 @@ class AnomalyDetectionUtil {
         }
         let s = sum / x_arr.length;
         let s1 = av * av;
-        let s2 = s-s1;
-        return s2;
+        return s - s1;
     }
 
     // returns the covariance of X and Y
