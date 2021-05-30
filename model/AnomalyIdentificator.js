@@ -63,7 +63,7 @@ const createCsvFile = (data, name) => {
     return path;
 }
 
-const detectAnomalies = async (trainFile, testSetInput, type) => {
+const anomalyIdentificator = async (trainFile, testSetInput, type) => {
 
     let data = trainFile.toString().split("\n");
     let keys = fillCsvKeys(data);
@@ -135,4 +135,4 @@ const detectAnomalies = async (trainFile, testSetInput, type) => {
     };
 }
 
-module.exports.detectAnomalies = detectAnomalies
+module.exports.detectAnomalies = anomalyIdentificator
