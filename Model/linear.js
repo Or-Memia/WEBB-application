@@ -24,16 +24,15 @@ function enterValuesToMatrix(attribute, timeSeries, rowsNumber, vals) {
 }
 
 class Linear {
-    #cf
+    #correlationFeatures
     #threshold
-    #anomalyDetectionUtil
+    #mathHelper
 
     constructor()
     {
-        this.#cf = []
-        this.#anomalyDetectionUtil = new mathHelper();
+        this.#correlationFeatures = []
+        this.#mathHelper = new mathHelper();
         this.#threshold = 0.9
-        this.f = false;
     }
 
     findMostCorrelative(attribute, vals, timeSeries)
@@ -46,7 +45,7 @@ class Linear {
             let jMax = 0;
             for (let j = t + 1; j < attribute.length; j++)
             {
-                let pearson = Math.abs(parseFloat(this.#anomalyDetectionUtil.pearson(vals[t], vals[j])))
+                let pearson = Math.abs(parseFloat(this.#mathHelper.pearson(vals[t], vals[j])))
                 if (pearson > tempMax)
                 {
                     tempMax = pearson;
@@ -88,9 +87,9 @@ class Linear {
     {
         let anomaly = [];
         let d;
-        for (d = 0; d < this.#cf.length; d++)
+        for (d = 0; d < this.#correlationFeatures.length; d++)
         {
-            let correlatedFeatures = this.#cf[d];
+            let correlatedFeatures = this.#correlationFeatures[d];
             let x = timeSeries.getRowValuesOfFeature(correlatedFeatures.F1);
             let y = timeSeries.getRowValuesOfFeature(correlatedFeatures.F2);
             pushAnomaly.call(this, x, y, correlatedFeatures, anomaly);
@@ -100,7 +99,7 @@ class Linear {
 
     getCf()
     {
-        return this.#cf
+        return this.#correlationFeatures
     }
 
     learnHelper(timeSeries, pearson, feature1, feature2, points)
@@ -112,9 +111,9 @@ class Linear {
             correlatingFeatures1.F1 = feature1;
             correlatingFeatures1.F2 = feature2;
             correlatingFeatures1.maxCorrelation = parseFloat(pearson);
-            correlatingFeatures1.linearRegression = this.#anomalyDetectionUtil.linearRegression(points);
+            correlatingFeatures1.linearRegression = this.#mathHelper.linearRegression(points);
             correlatingFeatures1.threshold = this.findThreshold(points, linesNumber, correlatingFeatures1.linearRegression) * 1.1;
-            this.#cf.push(correlatingFeatures1);
+            this.#correlationFeatures.push(correlatingFeatures1);
         }
     }
 //flout x , flout y .correlated features c

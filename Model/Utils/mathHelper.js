@@ -78,7 +78,7 @@ class MathHelper
     // returns the deviation between point and the line
     deviation(point, line)
     {
-        let ret = point.y - line.f(point.x);
+        let ret = point.y - line.getValWithM(point.x);
         return Math.abs(ret);
     }
 
