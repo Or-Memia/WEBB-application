@@ -3,7 +3,7 @@ const Shapes = require("./Shapes");
 const AnomalyReport = require("./AnomalyReport");
 const anomalyDetectionUtil = require('./AnomalyDetectionUtil')
 
-class LinearAlgorithm {
+class Linear {
     #cf
     #threshold
     #anomalyDetectionUtil
@@ -118,4 +118,4 @@ class LinearAlgorithm {
     }
 }
 
-module.exports = LinearAlgorithm
+module.exports = Linear

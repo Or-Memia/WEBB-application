@@ -1,9 +1,9 @@
-const LinearAlgorithm = require('./LinearAlgorithm')
+const LinearAlgorithm = require('./linear')
 const Shapes = require('./Shapes')
 const minCircle = require('smallest-enclosing-circle')
 const CorrelatedFeatures = require("./CorrelatedFeatures");
 
-class HybridAlgorithm extends LinearAlgorithm {
+class Hybrid extends LinearAlgorithm {
     #cf
 
     constructor() {
@@ -40,4 +40,4 @@ class HybridAlgorithm extends LinearAlgorithm {
 
 }
 
-module.exports = HybridAlgorithm;
+module.exports = Hybrid;

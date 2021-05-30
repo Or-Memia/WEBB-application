@@ -1,7 +1,7 @@
 const fs = require('fs')
 const TimeSeries = require('./TimeSeries')
-const LinearAlgorithm = require('./LinearAlgorithm')
-const HybridAlgorithm = require('./HybridAlgorithm')
+const LinearAlgorithm = require('./linear')
+const HybridAlgorithm = require('./hybrid')
 
 function make2DMatrix(d1, d2) {
     let arr = new Array(d1), i;
