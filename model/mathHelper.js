@@ -1,4 +1,4 @@
-const Shapes = require("./Utils/Shapes")
+const Shapes = require("./Utils/geometryShapes")
 
 class MathHelper {
     constructor() {
