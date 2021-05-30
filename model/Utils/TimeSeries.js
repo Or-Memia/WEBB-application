@@ -33,20 +33,9 @@ class TimeSeries{
     get_vector_Matrix(i) {
         return this.matrix[i];
     }
-    getMatrix() {
-        return this.matrix;
-    }
 
     getFeature() {
         return this.feature;
-    }
-
-    getNumOfFeatures() {
-        return this.numOfFeatures;
-    }
-
-    getNumOfLines() {
-        return this.numOfLines;
     }
 
     featureLocation(feature) {
