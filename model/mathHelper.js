@@ -4,7 +4,7 @@ class MathHelper {
     constructor() {
     }
 
-    avg(x_arr) {
+    average(x_arr) {
         let sum = 0;
         for (let i = 0; i < x_arr.length; i++) {
             sum += x_arr[i];
@@ -14,7 +14,7 @@ class MathHelper {
 
     // returns the variance of X and Y
     var(x_arr) {
-        let av = this.avg(x_arr);
+        let av = this.average(x_arr);
         let sum = 0;
         for (let i = 0; i < x_arr.length; i++) {
             sum += x_arr[i] * x_arr[i];
@@ -31,7 +31,7 @@ class MathHelper {
             sum += x_arr[i] * y_arr[i];
         }
         sum /= x_arr.length;
-        let temp = this.avg(x_arr) * this.avg(y_arr);
+        let temp = this.average(x_arr) * this.average(y_arr);
         return sum - temp;
     }
 
@@ -52,7 +52,7 @@ class MathHelper {
             y[i] = points[i].y;
         }
         let a = this.cov(x, y) / this.var(x);
-        let b = this.avg(y) - a * (this.avg(x));
+        let b = this.average(y) - a * (this.average(x));
 
         return new Line.Line(a, b);
     }

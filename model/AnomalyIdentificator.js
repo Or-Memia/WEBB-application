@@ -107,50 +107,9 @@ function initValues(trainSet, testSetInput)
     return {Keys: Keys, vals: vals, testP: testP, trainTimeSeries: trainTimeSeries};
 }
 
-const anomalyIdentificator = async (trainSet, testSetInput, algoType) =>
-{
-    let {Keys, vals, testP, trainTimeSeries} = initValues(trainSet, testSetInput);
-    let algo;
-    if (algoType === 'linear') {
-        algo = new linear();
-    } else if (algoType === 'hybrid')
-    {
-        algo = new hybrid();
-    }
-    algo.learnNormal(trainTimeSeries)
-    let corrFeatures = algo.getCf();
-    let timeSeriesTest = new TimeSeries(testP);
-    let anomalies = algo.detect(timeSeriesTest);
-
-    let valuesAndKey = new Map()
-    setMapValues(Keys, valuesAndKey, vals);
-
-    let topCorrelacted = new Map()
-    for (let i = 0; i < Keys.length; i++)
-    {
-        let currentFeature = Keys[i];
-
-        // default case
-        if (currentFeature === Keys[0])
-        {
-            topCorrelacted.set(currentFeature, Keys[1]);
-        } else {
-            topCorrelacted.set(currentFeature, Keys[0]);
-        }
-
-        for (let j = 0; j < corrFeatures.length; j++)
-        {
-            if (corrFeatures[j].feature1 === currentFeature)
-            {
-                topCorrelacted.set(currentFeature, corrFeatures[j].feature2);
-            }
-        }
-    }
-
-    let arr = new Array(anomalies.length)
+function splitCorrelated(anomalies, arr, corrFeatures) {
     let m;
-    for (m = 0; m < anomalies.length; m++)
-    {
+    for (m = 0; m < anomalies.length; m++) {
         let cureFeature = anomalies[m].information;
 
         // split the two correlative by '+'
@@ -174,6 +133,61 @@ const anomalyIdentificator = async (trainSet, testSetInput, algoType) =>
             }
         }
     }
+}
+
+function setCorrelated(Keys, topCorrelacted, corrFeatures) {
+    for (let i = 0; i < Keys.length; i++) {
+        let currentFeature = Keys[i];
+
+        // default case
+        if (currentFeature === Keys[0]) {
+            topCorrelacted.set(currentFeature, Keys[1]);
+        } else {
+            topCorrelacted.set(currentFeature, Keys[0]);
+        }
+
+        for (let j = 0; j < corrFeatures.length; j++) {
+            if (corrFeatures[j].feature1 === currentFeature) {
+                topCorrelacted.set(currentFeature, corrFeatures[j].feature2);
+            }
+        }
+    }
+}
+
+function whichAlgo(algoType, trainTimeSeries) {
+    let algo;
+    if (algoType === 'linear') {
+        algo = new linear();
+    } else if (algoType === 'hybrid') {
+        algo = new hybrid();
+    }
+    algo.learnNormal(trainTimeSeries)
+    return algo;
+}
+
+const anomalyIdentificator = async (trainSet, testSetInput, algoType) =>
+{
+    let {Keys, vals, testP, trainTimeSeries} = initValues(trainSet, testSetInput);
+
+    let algo = whichAlgo(algoType, trainTimeSeries);
+
+    let corrFeatures = algo.getCf();
+
+    let timeSeriesTest = new TimeSeries(testP);
+
+    let anomalies = algo.detect(timeSeriesTest);
+
+    let valuesAndKey = new Map()
+
+    setMapValues(Keys, valuesAndKey, vals);
+
+    let topCorrelacted = new Map()
+
+    setCorrelated(Keys, topCorrelacted, corrFeatures);
+
+    let arr = new Array(anomalies.length)
+
+    splitCorrelated(anomalies, arr, corrFeatures);
 
     return {
         anomalies: anomalies,
