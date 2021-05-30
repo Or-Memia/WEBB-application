@@ -1,8 +1,8 @@
-class AnomalyReport{
+class GetResults {
     constructor(description, timeStep) {
         this.description = description
         this.timeStep = timeStep
     }
 }
 
-module.exports = AnomalyReport;
+module.exports = GetResults;
