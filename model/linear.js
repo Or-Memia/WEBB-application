@@ -81,13 +81,13 @@ class Linear {
         for (let i = 0; i < this.#cf.length; i++)
         {
             let correlatedFeatures = this.#cf[i];
-            let x = timeSeries.getRowValuesOfFeature(correlatedFeatures.feature1);
-            let y = timeSeries.getRowValuesOfFeature(correlatedFeatures.feature2);
+            let x = timeSeries.getRowValuesOfFeature(correlatedFeatures.F1);
+            let y = timeSeries.getRowValuesOfFeature(correlatedFeatures.F2);
             for (let j = 0; j < x.length; j++)
             {
                 if (this.isAnomalous(x[j], y[j], correlatedFeatures))
                 {
-                    let det = correlatedFeatures.feature1 + "-" + correlatedFeatures.feature2;
+                    let det = correlatedFeatures.F1 + "-" + correlatedFeatures.F2;
                     anomaly.push(new AnomalyReport(det,(j+1)));
                 }
             }
@@ -111,8 +111,8 @@ class Linear {
         {
             let len = timeSeries.getNumOfInfoLines();
             let c = new CorrelatedFeatures();
-            c.feature1 = feature1;
-            c.feature2 = feature2;
+            c.F1 = feature1;
+            c.F2 = feature2;
             c.maxCorrlation = parseFloat(pearson);
             c.linearRegression = this.#anomalyDetectionUtil.linearRegression(points);
             c.threshold = this.findThreshold(points, len, c.linearRegression) * 1.1; // 10% increase

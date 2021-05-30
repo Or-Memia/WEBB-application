@@ -20,8 +20,8 @@ class Hybrid extends LinearAlgorithm {
             let minCircleData = minCircle(points)
             let circle = new Circle.Circle(new Point.Point(minCircleData.x, minCircleData.y), minCircleData.r)
             let corrFeatures = new CorrelatedFeatures()
-            corrFeatures.feature1 = f1;
-            corrFeatures.feature2 = f2;
+            corrFeatures.F1 = f1;
+            corrFeatures.F2 = f2;
             corrFeatures.maxCorrlation = pearson;
             corrFeatures.threshold = circle.radius * 1.1; // 10% increase
             corrFeatures.x = circle.center.x;
