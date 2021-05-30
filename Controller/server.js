@@ -1,6 +1,6 @@
 const lineNumberTableInHtml = 24;
 
-const {myExpress, convertJsonToHtml, myFileUpload, model, lineReader, FormData, fetch, path} = importModules();
+const {myExpress, convertJsonToHtml, myFileUpload, myModel, readLines, resultData, myFetch, myPath} = importModules();
 const server = myExpress()
 const serverPort = 8080;
 const resultsTableHtml =
@@ -12,14 +12,12 @@ const resultsTableHtml =
             ]
     }
 
-
 // Start website on 8080 localhost
 startWebApp();
 
-
-
 // Functions
-function importModules() {
+function importModules()
+{
     const myFetch = require('node-fetch')
     const convertJsonToHtml = require('node-json2html');
     const myFileUpload = require('express-fileupload')
@@ -28,14 +26,18 @@ function importModules() {
     const resultData = require('form-data')
     const myPath = require('path');
     const readLines = require('n-readlines');
-    return {myExpress: myExpress, convertJsonToHtml: convertJsonToHtml, myFileUpload: myFileUpload, model: myModel, lineReader: readLines, FormData: resultData, fetch: myFetch, path: myPath};
+    return {myExpress: myExpress, convertJsonToHtml: convertJsonToHtml, myFileUpload: myFileUpload, myModel: myModel, readLines: readLines, resultData: resultData, myFetch: myFetch, myPath: myPath};
 }
-function AppPostTableResults() {
-    server.post('/detect', (req, res) => {
-        if (req.files) {
+function AppPostTableResults()
+{
+    //
+    server.post('/detect', (req, res) =>
+    {
+        if (req.files)
+        {
             const AnomaliesDetectorInput = getInput(req);
             console.log(req.body.chosenAlgorithm);
-            fetch(('http://localhost:8080/'),
+            myFetch(('http://localhost:8080/'),
                 {
                     method: 'POST',
                     body: AnomaliesDetectorInput
@@ -46,21 +48,25 @@ function AppPostTableResults() {
         }
     })
 }
-function StartAppUsing() {
-    server.use(myExpress.urlencoded({
+function StartAppUsing()
+{
+    server.use(myExpress.urlencoded(
+        {
         extended: false
     }))
     server.use(myFileUpload({}))
     server.use(myExpress.static('view'))
 }
-function getInput(req) {
-    const AnomaliesDetectorInput = new FormData()
+function getInput(req)
+{
+    const AnomaliesDetectorInput = new resultData()
     AnomaliesDetectorInput.append("trainSetInput", req.files.trainSetInput.data)
     AnomaliesDetectorInput.append("testSetInput", req.files.testSetInput.data)
     AnomaliesDetectorInput.append("chosenAlgorithm", req.body.chosenAlgorithm)
     return AnomaliesDetectorInput;
 }
-function WriteRows(lineReaderStreamer, res) {
+function WriteRows(lineReaderStreamer, res)
+{
     let row;
     row = lineReaderStreamer.next();
     let i;
@@ -71,9 +77,10 @@ function WriteRows(lineReaderStreamer, res) {
     }
     return row;
 }
-function postInfo(res, result) {
+function postInfo(res, result)
+{
     let lineReaderStreamer;
-    lineReaderStreamer = new lineReader(path.join(__dirname, '../View/AnomalyResults.html'));
+    lineReaderStreamer = new readLines(myPath.join(__dirname, '../View/AnomalyResults.html'));
     let row = WriteRows(lineReaderStreamer, res);
 
     let report = JSON.stringify(result);
@@ -85,29 +92,33 @@ function postInfo(res, result) {
     }
     res.end()
 }
-function getRequestVals(req) {
+function getRequestVals(req)
+{
     let trainFile = req.files.trainSetInput
     let testSetInput = req.files.testSetInput
     let algorithmType = req.body.chosenAlgorithm
     return {trainFile, testSetInput, algorithmType};
 }
-function appPostAnomalies() {
+function appPostAnomalies()
+{
     server.post('/', (req, res) => {
         //get values from View
         let {trainFile, testSetInput, algorithmType} = getRequestVals(req);
-        model.detectAnomalies(trainFile.data.toString(), testSetInput.data.toString(), algorithmType).then((result) => {
+        myModel.detectAnomalies(trainFile.data.toString(), testSetInput.data.toString(), algorithmType).then((result) => {
             res.contentType("application/json")
             res.send(JSON.stringify(result.anomalies))
             res.end()
         })
     })
 }
-function AppGet() {
+function AppGet()
+{
     server.get('/', (req, res) => {
         res.sendFile('View/index.html')
     })
 }
-function startWebApp() {
+function startWebApp()
+{
     StartAppUsing();
     AppGet();
     appPostAnomalies();

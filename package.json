@@ -1,21 +1,17 @@
 {
-  "name": "AnomalyDetectionWebApp",
+  "name": "Anomaly",
   "version": "1.0.0",
   "main": "Controller/server.js",
   "scripts": {
     "start": "nodemon /Controller/server.js"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/TomerGutman/As2-Git.git"
+    "type": "git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/TomerGutman/As2-Git"
-  },
-  "homepage": "https://github.com/TomerGutman/As2-Git",
+  "bugs": {},
   "dependencies": {
     "collections": "^5.1.12",
     "express": "^4.17.1",
