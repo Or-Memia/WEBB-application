@@ -1,6 +1,6 @@
 const Shapes = require("./Utils/Shapes")
 
-class AnomalyDetectionUtil {
+class MathHelper {
     constructor() {
     }
 
@@ -69,4 +69,4 @@ class AnomalyDetectionUtil {
         return this.dev2(p, l);
     }
 }
-module.exports = AnomalyDetectionUtil
+module.exports = MathHelper

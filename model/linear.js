@@ -1,7 +1,7 @@
 const CorrelatedFeatures = require("./Utils/CorrelatedFeatures");
 const Shapes = require("./Utils/Shapes");
 const AnomalyReport = require("./getResults");
-const anomalyDetectionUtil = require('./AnomalyDetectionUtil')
+const anomalyDetectionUtil = require('./mathHelper')
 
 class Linear {
     #cf
