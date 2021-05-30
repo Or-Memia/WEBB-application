@@ -1,4 +1,4 @@
-const Line = require("./Utils/Line")
+const Line = require("./Line")
 
 class MathHelper
 {

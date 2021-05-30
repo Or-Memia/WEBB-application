@@ -1,6 +1,6 @@
 const correlatingFeatures = require("./Utils/correlatingFeatures");
 const AnomalyReport = require("./getResults");
-const mathHelper = require('./mathHelper')
+const mathHelper = require('./Utils/mathHelper')
 const Point = require('./Utils/Point')
 
 function pushAnomaly(x, y, correlatedFeatures, anomaly) {
