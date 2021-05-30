@@ -3,6 +3,26 @@ const AnomalyReport = require("./getResults");
 const mathHelper = require('./mathHelper')
 const Point = require('./Utils/Point')
 
+function pushAnomaly(x, y, correlatedFeatures, anomaly) {
+    let j;
+    for (j = 0; j < x.length; j++) {
+        if (this.isAnomalous(x[j], y[j], correlatedFeatures)) {
+            let det = correlatedFeatures.F1 + "-" + correlatedFeatures.F2;
+            anomaly.push(new AnomalyReport(det, (j + 1)));
+        }
+    }
+}
+
+function enterValuesToMatrix(attribute, timeSeries, rowsNumber, vals) {
+    let k;
+    for (k = 0; k < attribute.length; k++) {
+        let x = timeSeries.getRowValuesOfFeature(attribute[k])
+        for (let j = 0; j < rowsNumber; j++) {
+            vals[k][j] = parseFloat(x[j]);
+        }
+    }
+}
+
 class Linear {
     #cf
     #threshold
@@ -31,15 +51,7 @@ class Linear {
         }
 
         //fill vals
-        let k;
-        for (k = 0; k < attribute.length; k++)
-        {
-            let x = timeSeries.getRowValuesOfFeature(attribute[k])
-            for (let j = 0; j < rowsNumber; j++)
-            {
-                vals[k][j] = parseFloat(x[j]);
-            }
-        }
+        enterValuesToMatrix(attribute, timeSeries, rowsNumber, vals);
         this.findMostCorrelative(attribute, vals, timeSeries);
     }
 
@@ -82,19 +94,13 @@ class Linear {
     detect(timeSeries)
     {
         let anomaly = [];
-        for (let i = 0; i < this.#cf.length; i++)
+        let i;
+        for (i = 0; i < this.#cf.length; i++)
         {
             let correlatedFeatures = this.#cf[i];
             let x = timeSeries.getRowValuesOfFeature(correlatedFeatures.F1);
             let y = timeSeries.getRowValuesOfFeature(correlatedFeatures.F2);
-            for (let j = 0; j < x.length; j++)
-            {
-                if (this.isAnomalous(x[j], y[j], correlatedFeatures))
-                {
-                    let det = correlatedFeatures.F1 + "-" + correlatedFeatures.F2;
-                    anomaly.push(new AnomalyReport(det,(j+1)));
-                }
-            }
+            pushAnomaly.call(this, x, y, correlatedFeatures, anomaly);
         }
         return anomaly;
     }
@@ -119,7 +125,7 @@ class Linear {
             correlatingFeatures1.F2 = feature2;
             correlatingFeatures1.maxCorrlation = parseFloat(pearson);
             correlatingFeatures1.linearRegression = this.#anomalyDetectionUtil.linearRegression(points);
-            correlatingFeatures1.threshold = this.findThreshold(points, linesNumber, correlatingFeatures1.linearRegression) * 1.1; //
+            correlatingFeatures1.threshold = this.findThreshold(points, linesNumber, correlatingFeatures1.linearRegression) * 1.1;
             this.#cf.push(correlatingFeatures1);
         }
     }
