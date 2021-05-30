@@ -1,4 +1,4 @@
-const CorrelatedFeatures = require("./Utils/correlatingFeatures");
+const correlatingFeatures = require("./Utils/correlatingFeatures");
 const AnomalyReport = require("./getResults");
 const mathHelper = require('./mathHelper')
 const Point = require('./Utils/Point')
@@ -40,7 +40,11 @@ class Linear {
                 vals[k][j] = parseFloat(x[j]);
             }
         }
+        this.findMostCorrelative(attribute, vals, timeSeries);
+    }
 
+    findMostCorrelative(attribute, vals, timeSeries)
+    {
         let t;
         for (t = 0; t < attribute.length; t++)
         {
@@ -100,23 +104,23 @@ class Linear {
         return this.#cf
     }
 
-    setCorrelationThreshold(newThreshold)
-    {
-        this.#threshold = newThreshold;
-    }
+    // setCorrelationThreshold(newThreshold)
+    // {
+    //     this.#threshold = newThreshold;
+    // }
 
     learnHelper(timeSeries, pearson, feature1, feature2, points)
     {
         if (pearson > this.#threshold)
         {
-            let len = timeSeries.getNumOfInfoLines();
-            let c = new CorrelatedFeatures();
-            c.F1 = feature1;
-            c.F2 = feature2;
-            c.maxCorrlation = parseFloat(pearson);
-            c.linearRegression = this.#anomalyDetectionUtil.linearRegression(points);
-            c.threshold = this.findThreshold(points, len, c.linearRegression) * 1.1; // 10% increase
-            this.#cf.push(c);
+            let linesNumber = timeSeries.getNumOfInfoLines();
+            let correlatingFeatures1 = new correlatingFeatures();
+            correlatingFeatures1.F1 = feature1;
+            correlatingFeatures1.F2 = feature2;
+            correlatingFeatures1.maxCorrlation = parseFloat(pearson);
+            correlatingFeatures1.linearRegression = this.#anomalyDetectionUtil.linearRegression(points);
+            correlatingFeatures1.threshold = this.findThreshold(points, linesNumber, correlatingFeatures1.linearRegression) * 1.1; //
+            this.#cf.push(correlatingFeatures1);
         }
     }
 //flout x , flout y .correlated features c
