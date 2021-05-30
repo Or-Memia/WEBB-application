@@ -1,9 +1,9 @@
 {
   "name": "AnomalyDetectionWebApp",
   "version": "1.0.0",
-  "main": "controller/server.js",
+  "main": "Controller/server.js",
   "scripts": {
-    "start": "nodemon /controller/server.js"
+    "start": "nodemon /Controller/server.js"
   },
   "repository": {
     "type": "git",

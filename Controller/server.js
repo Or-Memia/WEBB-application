@@ -73,7 +73,7 @@ function WriteRows(lineReaderStreamer, res) {
 }
 function postInfo(res, result) {
     let lineReaderStreamer;
-    lineReaderStreamer = new lineReader(path.join(__dirname, '../view/AnomalyResults.html'));
+    lineReaderStreamer = new lineReader(path.join(__dirname, '../View/AnomalyResults.html'));
     let row = WriteRows(lineReaderStreamer, res);
 
     let report = JSON.stringify(result);
@@ -93,7 +93,7 @@ function getRequestVals(req) {
 }
 function appPostAnomalies() {
     server.post('/', (req, res) => {
-        //get values from view
+        //get values from View
         let {trainFile, testSetInput, algorithmType} = getRequestVals(req);
         model.detectAnomalies(trainFile.data.toString(), testSetInput.data.toString(), algorithmType).then((result) => {
             res.contentType("application/json")
@@ -104,7 +104,7 @@ function appPostAnomalies() {
 }
 function AppGet() {
     server.get('/', (req, res) => {
-        res.sendFile('view/index.html')
+        res.sendFile('View/index.html')
     })
 }
 function startWebApp() {
