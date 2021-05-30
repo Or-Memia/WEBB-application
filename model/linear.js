@@ -135,19 +135,19 @@ class Linear {
         return (Math.abs(y - c.linearRegression.getValWithM(x)) > c.threshold);
     }
 
-    findThreshold(points, len, rl)
+    findThreshold(points, size, line)
     {
-        let max = 0;
-        let i;
-        for (i = 0; i < len; i++)
+        let tempMax = 0;
+        let m;
+        for (m = 0; m < size; m++)
         {
-            let d = Math.abs(parseFloat(points[i].y) - parseFloat(rl.getValWithM(parseFloat(points[i].x))))
-            if (d > max)
+            let dev = Math.abs(parseFloat(points[m].y) - parseFloat(line.getValWithM(parseFloat(points[m].x))))
+            if (dev > tempMax)
             {
-                max = d;
+                tempMax = dev;
             }
         }
-        return max;
+        return tempMax;
     }
 
     getThreshold()
