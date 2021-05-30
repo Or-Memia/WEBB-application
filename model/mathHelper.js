@@ -1,72 +1,90 @@
 const Line = require("./Utils/Line")
 
-class MathHelper {
-    constructor() {
-    }
-
-    average(x_arr) {
+class MathHelper
+{
+    constructor()
+    {}
+//return the average of arrayX
+    average(arrayX)
+    {
         let sum = 0;
-        for (let i = 0; i < x_arr.length; i++) {
-            sum += x_arr[i];
+        let j;
+        for (j = 0; j < arrayX.length; j++)
+        {
+            sum += arrayX[j];
         }
-        return sum / (x_arr.length);
+        return sum / (arrayX.length);
     }
 
     // returns the variance of X and Y
-    variance(x_arr) {
-        let av = this.average(x_arr);
+    variance(arrayX)
+    {
+        let avg = this.average(arrayX);
         let sum = 0;
-        for (let i = 0; i < x_arr.length; i++) {
-            sum += x_arr[i] * x_arr[i];
+        let k;
+        for (k = 0; k < arrayX.length; k++)
+        {
+            sum += arrayX[k] * arrayX[k];
         }
-        let s = sum / x_arr.length;
-        let s1 = av * av;
-        return s - s1;
+        let div = sum / arrayX.length;
+        let pow_2 = avg * avg;
+        return div - pow_2;
     }
 
-    // returns the covariance of X and Y
-    covariance(x_arr, y_arr) {
+// returns the covariance of arrayX and arrayY
+    covariance(arrayX, arrayY)
+    {
         let sum = 0;
-        for (let i = 0; i < x_arr.length; i++) {
-            sum += x_arr[i] * y_arr[i];
+        let h;
+        for (h = 0; h < arrayX.length; h++)
+        {
+            sum += arrayX[h] * arrayY[h];
         }
-        sum /= x_arr.length;
-        let temp = this.average(x_arr) * this.average(y_arr);
-        return sum - temp;
+        sum /= arrayX.length;
+        let avgX = this.average(arrayX);
+        let avgY = this.average(arrayY);
+        let mul = avgX * avgY;
+        return sum - mul;
     }
 
-    // returns the Pearson correlation coefficient of X and Y
-    pearson(x_arr, y_arr) {
-        let ret = Math.sqrt(this.variance(x_arr));
-        let ret2 = ret * Math.sqrt(this.variance(y_arr));
-        let ret3 = this.covariance(x_arr, y_arr);
-        return ret3 / ret2;
+// returns the Pearson correlation coefficient of arrayX and arrayY
+    pearson(arrayX, arrayY)
+    {
+        let varX = Math.sqrt(this.variance(arrayX));
+        let varY = Math.sqrt(this.variance(arrayY));
+        let cov = this.covariance(arrayX, arrayY);
+        return cov / (varX * varY);
     }
 
-    // performs a linear regression and returns the Shapes equation
-    linearRegression(points) {
-        let x = [];
-        let y = [];
-        for (let i = 0; i < points.length; i++) {
-            x[i] = points[i].x;
-            y[i] = points[i].y;
+    // performs a linear regression and returns the line equation
+    linearRegression(points)
+    {
+        let array_x = [];
+        let array_y = [];
+        let t;
+        for (t = 0; t < points.length; t++)
+        {
+            array_x[t] = points[t].x;
+            array_y[t] = points[t].y;
         }
-        let a = this.covariance(x, y) / this.variance(x);
-        let b = this.average(y) - a * (this.average(x));
+        let a = this.covariance(array_x, array_y) / this.variance(array_x);
+        let b = this.average(array_y) - a * (this.average(array_x));
 
         return new Line.Line(a, b);
     }
 
-    // returns the deviation between point p and the Shapes
-    deviation(p, l) {
-        let ret = p.y - l.f(p.x);
+    // returns the deviation between point and the line
+    deviation(point, line)
+    {
+        let ret = point.y - line.f(point.x);
         return Math.abs(ret);
     }
 
-    // returns the deviation between point p and the Shapes equation of the points
-    secondDeviation(p, points) {
-        const l = this.linearRegression(points);
-        return this.deviation(p, l);
+// returns the deviation between point  and the line equation of the points
+    secondDeviation(point, points)
+    {
+        const line = this.linearRegression(points);
+        return this.deviation(point, line);
     }
 }
 module.exports = MathHelper
