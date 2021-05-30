@@ -1,7 +1,7 @@
-const CorrelatedFeatures = require("../CorrelatedFeatures");
-const Shapes = require("../Shapes");
-const AnomalyReport = require("../AnomalyReport");
-const anomalyDetectionUtil = require('../AnomalyDetectionUtil')
+const CorrelatedFeatures = require("./CorrelatedFeatures");
+const Shapes = require("./Shapes");
+const AnomalyReport = require("./AnomalyReport");
+const anomalyDetectionUtil = require('./AnomalyDetectionUtil')
 
 class LinearAlgorithm {
     #cf

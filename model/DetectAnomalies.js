@@ -1,7 +1,7 @@
 const fs = require('fs')
 const TimeSeries = require('./TimeSeries')
-const LinearAlgorithm = require('./Algorithms/LinearAlgorithm')
-const HybridAlgorithm = require('./Algorithms/HybridAlgorithm')
+const LinearAlgorithm = require('./LinearAlgorithm')
+const HybridAlgorithm = require('./HybridAlgorithm')
 
 function make2DMatrix(d1, d2) {
     let arr = new Array(d1), i;
@@ -54,7 +54,7 @@ const createCsvString = (keys, values) => {
 }
 
 const createCsvFile = (data, name) => {
-    let path = "model/generatedFiles/" + name + ".csv";
+    let path = "model/AnomaliesOutputFiles/" + name + ".csv";
     fs.writeFileSync(path, data, (err) => {
         if (err) {
             console.error(err)

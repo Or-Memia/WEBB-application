@@ -1,7 +1,7 @@
 const LinearAlgorithm = require('./LinearAlgorithm')
-const Shapes = require('../Shapes')
+const Shapes = require('./Shapes')
 const minCircle = require('smallest-enclosing-circle')
-const CorrelatedFeatures = require("../CorrelatedFeatures");
+const CorrelatedFeatures = require("./CorrelatedFeatures");
 
 class HybridAlgorithm extends LinearAlgorithm {
     #cf
