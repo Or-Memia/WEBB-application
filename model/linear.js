@@ -1,5 +1,4 @@
 const CorrelatedFeatures = require("./Utils/correlatingFeatures");
-const Shapes = require("./Utils/geometryShapes");
 const AnomalyReport = require("./getResults");
 const anomalyDetectionUtil = require('./mathHelper')
 const Point = require('./Utils/Point')

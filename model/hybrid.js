@@ -1,5 +1,4 @@
 const LinearAlgorithm = require('./linear')
-const Shapes = require('./Utils/geometryShapes')
 const Circle = require('./Utils/Circle')
 const Point = require('./Utils/Point')
 const minCircle = require('smallest-enclosing-circle')

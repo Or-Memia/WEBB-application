@@ -1,4 +1,3 @@
-const Shapes = require("./Utils/geometryShapes")
 const Line = require("./Utils/Line")
 
 class MathHelper {
