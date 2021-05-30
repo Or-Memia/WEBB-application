@@ -54,7 +54,7 @@ const createCsvString = (keys, values) => {
 }
 
 const createCsvFile = (data, name) => {
-    let path = "model/AnomaliesOutputFiles/" + name + ".csv";
+    let path = "AnomaliesOutputFiles/" + name + ".csv";
     fs.writeFileSync(path, data, (err) => {
         if (err) {
             console.error(err)
