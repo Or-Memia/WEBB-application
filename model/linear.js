@@ -99,13 +99,13 @@ class Linear {
     }
 
     isDetect(x, y, correlatedFeatures) {
-        return (Math.abs(y - correlatedFeatures.lin_reg.f(x)) > correlatedFeatures.threshold);
+        return (Math.abs(y - correlatedFeatures.lin_reg.getValWithM(x)) > correlatedFeatures.threshold);
     }
 
     findThreshold(points, len, rl) {
         let max = 0;
         for (let i = 0; i < len; i++) {
-            let d = Math.abs(parseFloat(points[i].y) - parseFloat(rl.f(parseFloat(points[i].x))))
+            let d = Math.abs(parseFloat(points[i].y) - parseFloat(rl.getValWithM(parseFloat(points[i].x))))
             if (d > max) {
                 max = d;
             }

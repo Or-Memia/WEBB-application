@@ -1,6 +1,3 @@
-
-
-
 class Circle{
     constructor(centerPoint, radius)
     {
@@ -8,7 +5,5 @@ class Circle{
         this.radius = radius;
     }
 }
-
-
 
 module.exports.Circle = Circle

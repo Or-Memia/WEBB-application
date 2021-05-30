@@ -1,4 +1,3 @@
-
 class Point
 {
     constructor(x, y) {
@@ -6,7 +5,5 @@ class Point
         this.x = x
     }
 }
-
-
 
 module.exports.Point = Point
