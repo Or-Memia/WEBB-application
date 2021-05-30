@@ -13,7 +13,7 @@ class MathHelper {
     }
 
     // returns the variance of X and Y
-    var(x_arr) {
+    variance(x_arr) {
         let av = this.average(x_arr);
         let sum = 0;
         for (let i = 0; i < x_arr.length; i++) {
@@ -37,8 +37,8 @@ class MathHelper {
 
     // returns the Pearson correlation coefficient of X and Y
     pearson(x_arr, y_arr) {
-        let ret = Math.sqrt(this.var(x_arr));
-        let ret2 = ret * Math.sqrt(this.var(y_arr));
+        let ret = Math.sqrt(this.variance(x_arr));
+        let ret2 = ret * Math.sqrt(this.variance(y_arr));
         let ret3 = this.cov(x_arr, y_arr);
         return ret3 / ret2;
     }
@@ -51,7 +51,7 @@ class MathHelper {
             x[i] = points[i].x;
             y[i] = points[i].y;
         }
-        let a = this.cov(x, y) / this.var(x);
+        let a = this.cov(x, y) / this.variance(x);
         let b = this.average(y) - a * (this.average(x));
 
         return new Line.Line(a, b);

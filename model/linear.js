@@ -97,9 +97,9 @@ class Linear {
             this.#cf.push(c);
         }
     }
-
-    isAnomalous(x, y, correlatedFeatures) {
-        return (Math.abs(y - correlatedFeatures.lin_reg.getValWithM(x)) > correlatedFeatures.threshold);
+//flout x , flout y .correlated features c
+    isAnomalous(x, y, c) {
+        return (Math.abs(y - c.lin_reg.getValWithM(x)) > c.threshold);
     }
 
     findThreshold(points, len, rl) {

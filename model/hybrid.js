@@ -29,14 +29,14 @@ class Hybrid extends LinearAlgorithm {
             this.#cf.push(corrFeatures);
         }
     }
-
-    isAnomalous(x, y, correlatedFeatures) {
-        if (Math.abs(correlatedFeatures.corrlation) > 0.9) {
-            return super.isAnomalous(x, y, correlatedFeatures);
+//flout x , flout y .correlated features c
+    isAnomalous(x, y, c) {
+        if (Math.abs(c.corrlation) > 0.9) {
+            return super.isAnomalous(x, y, c);
         } else {
-            let distance = Math.sqrt((Math.pow(x - correlatedFeatures.x, 2) +
-                Math.pow(y - correlatedFeatures.y, 2)));
-            return (distance > correlatedFeatures.threshold);
+            let dis = Math.sqrt((Math.pow(x - c.x, 2) +
+                Math.pow(y - c.y, 2)));
+            return (dis > c.threshold);
         }
     }
 
