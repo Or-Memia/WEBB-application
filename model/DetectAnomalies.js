@@ -1,5 +1,5 @@
 const fs = require('fs')
-const TimeSeries = require('./TimeSeries')
+const TimeSeries = require('./Utils/TimeSeries')
 const LinearAlgorithm = require('./linear')
 const HybridAlgorithm = require('./hybrid')
 

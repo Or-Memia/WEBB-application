@@ -1,4 +1,4 @@
-const Shapes = require("./Shapes")
+const Shapes = require("./Utils/Shapes")
 
 class AnomalyDetectionUtil {
     constructor() {

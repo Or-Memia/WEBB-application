@@ -1,5 +1,5 @@
-const CorrelatedFeatures = require("./CorrelatedFeatures");
-const Shapes = require("./Shapes");
+const CorrelatedFeatures = require("./Utils/CorrelatedFeatures");
+const Shapes = require("./Utils/Shapes");
 const AnomalyReport = require("./AnomalyReport");
 const anomalyDetectionUtil = require('./AnomalyDetectionUtil')
 
