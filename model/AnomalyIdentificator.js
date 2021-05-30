@@ -1,138 +1,176 @@
-const fs = require('fs')
-const TimeSeries = require('./Utils/TimeSeries')
-const LinearAlgorithm = require('./linear')
-const HybridAlgorithm = require('./hybrid')
+function extractModules() {
+    const fs = require('fs')
+    const TimeSeries = require('./Utils/TimeSeries')
+    const linear = require('./linear')
+    const hybrid = require('./hybrid')
+    return {fs, TimeSeries, linear, hybrid};
+}
 
-function make2DMatrix(d1, d2) {
-    let arr = new Array(d1), i;
-    for (i = 0; i < d1; i++) {
-        arr[i] = new Array(d2);
+const {fs, TimeSeries, linear, hybrid} = extractModules();
+
+function createMatrix(row, col)
+{
+    let arr = new Array(row), i;
+    for (i = 0; i < row; i++)
+    {
+        arr[i] = new Array(col);
     }
     return arr;
 }
 
-function fillCsvKeys(data) {
+function fillCsvKeys(info)
+{
     //init and fill csv keys
-    let keys = data[0].split(",")
+    let keys = info[0].split(",")
     keys[keys.length - 1] = keys[keys.length - 1].replaceAll("\r", "\n").slice(0, -1)
     return keys;
 }
 
-function splitMethod(numOfValue, dataValues, data) {
-    for (let i = 0; i < numOfValue; i++) {
-        dataValues[i] = data[i + 1].split(",");
+function splitMethod(valuesNumber, valuesInfo, info)
+{
+    for (let i = 0; i < valuesNumber; i++)
+    {
+        valuesInfo[i] = info[i + 1].split(",");
     }
 }
 
-function matrixToStr(keysLength, numOfValue, values, dataValues) {
-    for (let i = 0; i < keysLength; i++) {
-        for (let j = 0; j < numOfValue; j++) {
-            values[i][j] = dataValues[j][i].toString();
+function fromMatrixTOString(length, valuesNumber, vals, valuesInfo)
+{
+    for (let i = 0; i < length; i++)
+    {
+        for (let j = 0; j < valuesNumber; j++)
+        {
+            vals[i][j] = valuesInfo[j][i].toString();
         }
     }
 }
 
-function deleteBackSlashRow(numOfValue, values) {
-    for (let i = 0; i < numOfValue; i++) {
-        values[values.length - 1][i] = values[values.length - 1][i].replaceAll("\r", "\n").slice(0, -1)
+function deleteBackSlashRow(valuesNumber, vals)
+{
+    for (let i = 0; i < valuesNumber; i++)
+    {
+        vals[vals.length - 1][i] = vals[vals.length - 1][i].replaceAll("\r", "\n").slice(0, -1)
     }
 }
 
-function fillCsvValues(numOfValue, keysLength, data) {
+function fillCsvValues(valuesNumber, length, info)
+{
     //init and fill data values
-    let dataValues = make2DMatrix(numOfValue, keysLength)
-    splitMethod(numOfValue, dataValues, data);
+    let details = createMatrix(valuesNumber, length)
+    splitMethod(valuesNumber, details, info);
 
     //init and fill csv values
-    let values = make2DMatrix(keysLength, numOfValue)
-    matrixToStr(keysLength, numOfValue, values, dataValues);
+    let values = createMatrix(length, valuesNumber)
+    fromMatrixTOString(length, valuesNumber, values, details);
     //remove "\r" from last row of values
-    deleteBackSlashRow(numOfValue, values);
+    deleteBackSlashRow(valuesNumber, values);
 
     return values;
 }
 
 
 
-const createCsvFile = (data, name) => {
-    let path = "AnomaliesOutputFiles/" + name + ".csv";
-    fs.writeFileSync(path, data, (err) => {
+const createCsvFile = (info, name) =>
+{
+    let p = "AnomaliesOutputFiles/" + name + ".csv";
+    fs.writeFileSync(p, info, (err) =>
+    {
         if (err) {
             console.error(err)
         }
     });
-    return path;
+    return p;
 }
 
-function setMapValues(keys, keysAndValuesMap, values) {
-    for (let i = 0; i < keys.length; i++) {
-        keysAndValuesMap.set(keys[i], values[i]);
+function setMapValues(Keys, valueAndKey, vals)
+{
+    for (let i = 0; i < Keys.length; i++)
+    {
+        valueAndKey.set(Keys[i], vals[i]);
     }
 }
 
-function setTimeStep(anomaliesArray, i, anomalies) {
-    anomaliesArray[i][2] = anomalies[i].rowID
+function setTimeStep(arr, m, anomaly)
+
+{
+    arr[m][2] = anomaly[m].rowID
 }
 
-const anomalyIdentificator = async (trainFile, testSetInput, type) => {
+function initValues(trainSet, testSetInput)
+{
+    let info = trainSet.toString().split("\n");
+    let Keys = fillCsvKeys(info);
+    let vals = fillCsvValues(info.length - 2, Keys.length, info);
+    let trainP = createCsvFile(info = trainSet.toString(), "train")
+    let testP = createCsvFile(testSetInput.toString(), "anomaly")
+    let trainTimeSeries = new TimeSeries(trainP);
+    return {keys: Keys, vals: vals, anomalyPath: testP, trainTimeSeries: trainTimeSeries};
+}
 
-    let data = trainFile.toString().split("\n");
-    let keys = fillCsvKeys(data);
-    let values = fillCsvValues(data.length - 2, keys.length, data);
-    let trainPath = createCsvFile(data = trainFile.toString(), "train")
-    let anomalyPath = createCsvFile(testSetInput.toString(), "anomaly")
-    let tsTrain = new TimeSeries(trainPath);
+const anomalyIdentificator = async (trainSet, testSetInput, type) =>
+{
+    let {keys, vals, anomalyPath, trainTimeSeries} = initValues(trainSet, testSetInput);
     let algorithm;
     if (type === 'linear') {
-        algorithm = new LinearAlgorithm();
-    } else if (type === 'hybrid') {
-        algorithm = new HybridAlgorithm();
+        algorithm = new linear();
+    } else if (type === 'hybrid')
+    {
+        algorithm = new hybrid();
     }
-    algorithm.learnNormal(tsTrain)
+    algorithm.learnNormal(trainTimeSeries)
     let corrFeatures = algorithm.getCf();
     let tsAnomaly = new TimeSeries(anomalyPath);
     let anomalies = algorithm.detect(tsAnomaly);
 
     let keysAndValuesMap = new Map()
-    setMapValues(keys, keysAndValuesMap, values);
+    setMapValues(keys, keysAndValuesMap, vals);
 
-    let mostCorrFeatureMap = new Map()
-    for (let i = 0; i < keys.length; i++) {
+    let topCorrelacted = new Map()
+    for (let i = 0; i < keys.length; i++)
+    {
         let currentFeature = keys[i];
 
         // default case
-        if (currentFeature === keys[0]) {
-            mostCorrFeatureMap.set(currentFeature, keys[1]);
+        if (currentFeature === keys[0])
+        {
+            topCorrelacted.set(currentFeature, keys[1]);
         } else {
-            mostCorrFeatureMap.set(currentFeature, keys[0]);
+            topCorrelacted.set(currentFeature, keys[0]);
         }
 
-        for (let j = 0; j < corrFeatures.length; j++) {
-            if (corrFeatures[j].feature1 === currentFeature) {
-                mostCorrFeatureMap.set(currentFeature, corrFeatures[j].feature2);
+        for (let j = 0; j < corrFeatures.length; j++)
+        {
+            if (corrFeatures[j].feature1 === currentFeature)
+            {
+                topCorrelacted.set(currentFeature, corrFeatures[j].feature2);
             }
         }
     }
 
-    let anomaliesArray = new Array(anomalies.length)
-    for (let i = 0; i < anomalies.length; i++) {
-        let currentFeature = anomalies[i].information;
+    let arr = new Array(anomalies.length)
+    let m;
+    for (m = 0; m < anomalies.length; m++)
+    {
+        let cureFeature = anomalies[m].information;
 
         // split the two correlative by '+'
-        let features = currentFeature.split("+");
-        anomaliesArray[i] = new Array(3)
+        let feat = cureFeature.split("+");
+        arr[m] = new Array(3)
 
         // fill the arrays with the correct values of the anomalies and the line it happened
-        for (let j = 0; j < corrFeatures.length; j++) {
-            if (corrFeatures[j].feature1 === features[0]) {
+        let k;
+        for (k = 0; k < corrFeatures.length; k++) {
+            if (corrFeatures[k].feature1 !== feat[0]) {
+                if (corrFeatures[k].feature1 === feat[1]) {
+                    arr[m][0] = feat[1]
+                    arr[m][1] = feat[0]
+                    setTimeStep(arr, m, anomalies);
+                }
+            } else {
                 // fill each cell in the array
-                anomaliesArray[i][0] = features[0]
-                anomaliesArray[i][1] = features[1]
-                setTimeStep(anomaliesArray, i, anomalies);
-            } else if (corrFeatures[j].feature1 === features[1]) {
-                anomaliesArray[i][0] = features[1]
-                anomaliesArray[i][1] = features[0]
-                setTimeStep(anomaliesArray, i, anomalies);
+                arr[m][0] = feat[0]
+                arr[m][1] = feat[1]
+                setTimeStep(arr, m, anomalies);
             }
         }
     }
@@ -140,7 +178,7 @@ const anomalyIdentificator = async (trainFile, testSetInput, type) => {
     return {
         anomalies: anomalies,
         keys: keys,
-        values: values,
+        values: vals,
     };
 }
 
