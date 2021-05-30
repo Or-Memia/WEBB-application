@@ -187,7 +187,7 @@ const anomalyIdentificator = async (trainSet, testSetInput, algoType) =>
 
     let algo = whichAlgo(algoType, trainTimeSeries);
 
-    let corrFeatures = algo.getCf();
+    let corrFeatures = algo.getCorrelationFeatures();
 
     let timeSeriesTest = new TimeSeries(testP);
 

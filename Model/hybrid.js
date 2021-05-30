@@ -10,11 +10,11 @@ function exportModules() {
 const {linear, Circle, Point, minCircle, CorrelatingFeatures} = exportModules();
 
 class Hybrid extends linear {
-    #cf
+    #correlationFeatures
 
     constructor() {
         super();
-        this.#cf = super.getCf();
+        this.#correlationFeatures = super.getCorrelationFeatures();
     }
 
     learnHelper(timeSeries, pearson, feature1, feature2, points)
@@ -31,7 +31,7 @@ class Hybrid extends linear {
             correlatingFeatures.maxCorrelation = pearson;
             correlatingFeatures.F2 = feature2;
             correlatingFeatures.F1 = feature1;
-            this.#cf.push(correlatingFeatures);
+            this.#correlationFeatures.push(correlatingFeatures);
         }
     }
 //flout x , flout y .correlated features c

@@ -97,7 +97,7 @@ class Linear {
         return anomaly;
     }
 
-    getCf()
+    getCorrelationFeatures()
     {
         return this.#correlationFeatures
     }
