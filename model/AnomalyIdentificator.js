@@ -71,7 +71,7 @@ function setMapValues(keys, keysAndValuesMap, values) {
 }
 
 function setTimeStep(anomaliesArray, i, anomalies) {
-    anomaliesArray[i][2] = anomalies[i].line
+    anomaliesArray[i][2] = anomalies[i].rowID
 }
 
 const anomalyIdentificator = async (trainFile, testSetInput, type) => {

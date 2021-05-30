@@ -13,7 +13,8 @@ class Hybrid extends LinearAlgorithm {
     }
 
 
-    learnHelper(ts, pearson, f1, f2, points) {
+    learnHelper(ts, pearson, f1, f2, points)
+    {
         super.learnHelper(ts, pearson, f1, f2, points);
         if (pearson > 0.5 && pearson < super.getThreshold()) {
             let minCircleData = minCircle(points)

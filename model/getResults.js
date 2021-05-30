@@ -1,8 +1,8 @@
 class GetResults
 {
-    constructor(information, line)
+    constructor(information, rowID)
     {
-        this.line = line
+        this.rowID = rowID
         this.information = information
     }
 }
