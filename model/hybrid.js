@@ -1,10 +1,15 @@
-const LinearAlgorithm = require('./linear')
-const Circle = require('./Utils/Circle')
-const Point = require('./Utils/Point')
-const minCircle = require('smallest-enclosing-circle')
-const CorrelatedFeatures = require("./Utils/correlatingFeatures");
+function exportModules() {
+    const linear = require('./linear')
+    const Circle = require('./Utils/Circle')
+    const Point = require('./Utils/Point')
+    const minCircle = require('smallest-enclosing-circle')
+    const CorrelatingFeatures = require("./Utils/correlatingFeatures");
+    return {linear, Circle, Point, minCircle, CorrelatingFeatures};
+}
 
-class Hybrid extends LinearAlgorithm {
+const {linear, Circle, Point, minCircle, CorrelatingFeatures} = exportModules();
+
+class Hybrid extends linear {
     #cf
 
     constructor() {
@@ -12,31 +17,35 @@ class Hybrid extends LinearAlgorithm {
         this.#cf = super.getCf();
     }
 
-
-    learnHelper(ts, pearson, f1, f2, points)
+    learnHelper(timeSeries, pearson, feature1, feature2, points)
     {
-        super.learnHelper(ts, pearson, f1, f2, points);
-        if (pearson > 0.5 && pearson < super.getThreshold()) {
-            let minCircleData = minCircle(points)
-            let circle = new Circle.Circle(new Point.Point(minCircleData.x, minCircleData.y), minCircleData.r)
-            let corrFeatures = new CorrelatedFeatures()
-            corrFeatures.F1 = f1;
-            corrFeatures.F2 = f2;
-            corrFeatures.maxCorrlation = pearson;
-            corrFeatures.threshold = circle.radius * 1.1; // 10% increase
-            corrFeatures.x = circle.center.x;
-            corrFeatures.y = circle.center.y;
-            this.#cf.push(corrFeatures);
+        super.learnHelper(timeSeries, pearson, feature1, feature2, points);
+        if (pearson > 0.5 && pearson < super.getThreshold())
+        {
+            let minCircle1 = minCircle(points)
+            let circle1 = new Circle.Circle(new Point.Point(minCircle1.x, minCircle1.y), minCircle1.r)
+            let correlatingFeatures = new CorrelatingFeatures()
+            correlatingFeatures.y = circle1.center.y;
+            correlatingFeatures.x = circle1.center.x;
+            correlatingFeatures.threshold = circle1.radius * 1.1;
+            correlatingFeatures.maxCorrelation = pearson;
+            correlatingFeatures.F2 = feature2;
+            correlatingFeatures.F1 = feature1;
+            this.#cf.push(correlatingFeatures);
         }
     }
 //flout x , flout y .correlated features c
     isAnomalous(x, y, c) {
-        if (Math.abs(c.maxCorrlation) > 0.9) {
+        if (Math.abs(c.maxCorrelation) > 0.9)
+        {
             return super.isAnomalous(x, y, c);
-        } else {
-            let dis = Math.sqrt((Math.pow(x - c.x, 2) +
-                Math.pow(y - c.y, 2)));
-            return (dis > c.threshold);
+        }
+        else
+        {
+            let powX = Math.pow(x - c.x, 2);
+            let powY = Math.pow(y - c.y, 2);
+            let sqrt = Math.sqrt(powX + powY);
+            return (sqrt > c.threshold);
         }
     }
 

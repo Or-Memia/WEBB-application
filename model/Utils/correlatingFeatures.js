@@ -2,7 +2,7 @@ class CorrelatingFeatures
 {
     F1
     F2
-    maxCorrlation
+    maxCorrelation
     linearRegression
     threshold
     x

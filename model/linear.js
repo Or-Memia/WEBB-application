@@ -76,12 +76,12 @@ class Linear {
 
     toPoints(value1, value2)
     {
-        let ps = new Array(value1.length)
+        let points = new Array(value1.length)
         for (let l = 0; l < value1.length; l++)
         {
-            ps[l] = new Point.Point(parseFloat(value1[l]), parseFloat(value2[l]));
+            points[l] = new Point.Point(parseFloat(value1[l]), parseFloat(value2[l]));
         }
-        return ps;
+        return points;
     }
 
     detect(timeSeries)
@@ -111,7 +111,7 @@ class Linear {
             let correlatingFeatures1 = new correlatingFeatures();
             correlatingFeatures1.F1 = feature1;
             correlatingFeatures1.F2 = feature2;
-            correlatingFeatures1.maxCorrlation = parseFloat(pearson);
+            correlatingFeatures1.maxCorrelation = parseFloat(pearson);
             correlatingFeatures1.linearRegression = this.#anomalyDetectionUtil.linearRegression(points);
             correlatingFeatures1.threshold = this.findThreshold(points, linesNumber, correlatingFeatures1.linearRegression) * 1.1;
             this.#cf.push(correlatingFeatures1);
