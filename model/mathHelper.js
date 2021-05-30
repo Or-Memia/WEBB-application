@@ -25,7 +25,7 @@ class MathHelper {
     }
 
     // returns the covariance of X and Y
-    cov(x_arr, y_arr) {
+    covariance(x_arr, y_arr) {
         let sum = 0;
         for (let i = 0; i < x_arr.length; i++) {
             sum += x_arr[i] * y_arr[i];
@@ -39,7 +39,7 @@ class MathHelper {
     pearson(x_arr, y_arr) {
         let ret = Math.sqrt(this.variance(x_arr));
         let ret2 = ret * Math.sqrt(this.variance(y_arr));
-        let ret3 = this.cov(x_arr, y_arr);
+        let ret3 = this.covariance(x_arr, y_arr);
         return ret3 / ret2;
     }
 
@@ -51,7 +51,7 @@ class MathHelper {
             x[i] = points[i].x;
             y[i] = points[i].y;
         }
-        let a = this.cov(x, y) / this.variance(x);
+        let a = this.covariance(x, y) / this.variance(x);
         let b = this.average(y) - a * (this.average(x));
 
         return new Line.Line(a, b);
