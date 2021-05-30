@@ -1,5 +1,7 @@
 const LinearAlgorithm = require('./linear')
 const Shapes = require('./Utils/geometryShapes')
+const Circle = require('./Utils/Circle')
+const Point = require('./Utils/Point')
 const minCircle = require('smallest-enclosing-circle')
 const CorrelatedFeatures = require("./Utils/correlatingFeatures");
 
@@ -16,7 +18,7 @@ class Hybrid extends LinearAlgorithm {
         super.learnHelper(ts, pearson, f1, f2, points);
         if (pearson > 0.5 && pearson < super.getThreshold()) {
             let minCircleData = minCircle(points)
-            let circle = new Shapes.Circle(new Shapes.Point(minCircleData.x, minCircleData.y), minCircleData.r)
+            let circle = new Circle.Circle(new Point.Point(minCircleData.x, minCircleData.y), minCircleData.r)
             let corrFeatures = new CorrelatedFeatures()
             corrFeatures.feature1 = f1;
             corrFeatures.feature2 = f2;

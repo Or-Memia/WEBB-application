@@ -1,4 +1,5 @@
 const Shapes = require("./Utils/geometryShapes")
+const Line = require("./Utils/Line")
 
 class MathHelper {
     constructor() {
@@ -54,7 +55,7 @@ class MathHelper {
         let a = this.cov(x, y) / this.var(x);
         let b = this.avg(y) - a * (this.avg(x));
 
-        return new Shapes.Line(a, b);
+        return new Line.Line(a, b);
     }
 
     // returns the deviation between point p and the Shapes

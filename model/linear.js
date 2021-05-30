@@ -2,6 +2,7 @@ const CorrelatedFeatures = require("./Utils/correlatingFeatures");
 const Shapes = require("./Utils/geometryShapes");
 const AnomalyReport = require("./getResults");
 const anomalyDetectionUtil = require('./mathHelper')
+const Point = require('./Utils/Point')
 
 class Linear {
     #cf
@@ -56,7 +57,7 @@ class Linear {
     toPoints(v1, v2) {
         let ps = new Array(v1.length)
         for (let i = 0; i < v1.length; i++) {
-            ps[i] = new Shapes.Point(parseFloat(v1[i]), parseFloat(v2[i]));
+            ps[i] = new Point.Point(parseFloat(v1[i]), parseFloat(v2[i]));
         }
         return ps;
     }

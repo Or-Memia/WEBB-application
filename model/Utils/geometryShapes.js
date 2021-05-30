@@ -1,4 +1,5 @@
-class Line {
+class Line
+{
     constructor(a, b) {
         if (a === undefined) {
             this.a = 0
@@ -14,21 +15,29 @@ class Line {
     }
 }
 
-class Point {
+class Point
+{
     constructor(x, y) {
-        this.x = x
         this.y = y
+        this.x = x
     }
 }
 
 
 class Circle{
-    constructor(point, r) {
-        this.center = point;
-        this.radius = r;
+    constructor(centerPoint, radius)
+    {
+        this.center = centerPoint;
+        this.radius = radius;
     }
 }
 
-module.exports.Line = Line
-module.exports.Point = Point
-module.exports.Circle = Circle
+
+
+exportModuls();
+
+function exportModuls() {
+    // module.exports.Line = Line
+    module.exports.Point = Point
+    module.exports.Circle = Circle
+}
