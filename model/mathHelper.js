@@ -44,7 +44,7 @@ class MathHelper {
     }
 
     // performs a linear regression and returns the Shapes equation
-    linear_reg(points) {
+    linearRegression(points) {
         let x = [];
         let y = [];
         for (let i = 0; i < points.length; i++) {
@@ -65,7 +65,7 @@ class MathHelper {
 
     // returns the deviation between point p and the Shapes equation of the points
     dev(p, points) {
-        const l = this.linear_reg(points);
+        const l = this.linearRegression(points);
         return this.dev2(p, l);
     }
 }

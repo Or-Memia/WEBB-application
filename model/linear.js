@@ -92,7 +92,7 @@ class Linear {
             c.feature1 = f1;
             c.feature2 = f2;
             c.corrlation = parseFloat(pearson);
-            c.lin_reg = this.#anomalyDetectionUtil.linear_reg(points);
+            c.lin_reg = this.#anomalyDetectionUtil.linearRegression(points);
             c.threshold = this.findThreshold(points, len, c.lin_reg) * 1.1; // 10% increase
             this.#cf.push(c);
         }
