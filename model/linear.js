@@ -1,6 +1,6 @@
 const CorrelatedFeatures = require("./Utils/correlatingFeatures");
 const AnomalyReport = require("./getResults");
-const anomalyDetectionUtil = require('./mathHelper')
+const mathHelper = require('./mathHelper')
 const Point = require('./Utils/Point')
 
 class Linear {
@@ -8,67 +8,85 @@ class Linear {
     #threshold
     #anomalyDetectionUtil
 
-    constructor() {
+
+    constructor()
+    {
         this.#cf = []
-        this.#anomalyDetectionUtil = new anomalyDetectionUtil();
+        this.#anomalyDetectionUtil = new mathHelper();
         this.#threshold = 0.9
         this.f = false;
     }
 
-    learnNormal(ts) {
-        let atts = ts.getFeature()
+    learnNormal(timeSeries)
+    {
+        let attribute = timeSeries.getFeature()
 
         //init vals
-        let vals = new Array(atts.length)
-        let numOfRows = ts.getNumOfInfoLines()
-        for (let i = 0; i < atts.length; i++) {
-            vals[i] = new Array(numOfRows);
+        let vals = new Array(attribute.length)
+        let rowsNumber = timeSeries.getNumOfInfoLines()
+        let j;
+        for (j = 0; j < attribute.length; j++)
+        {
+            vals[j] = new Array(rowsNumber);
         }
 
         //fill vals
-        for (let i = 0; i < atts.length; i++) {
-            let x = ts.getRowValuesOfFeature(atts[i])
-            for (let j = 0; j < numOfRows; j++) {
-                vals[i][j] = parseFloat(x[j]);
+        let k;
+        for (k = 0; k < attribute.length; k++)
+        {
+            let x = timeSeries.getRowValuesOfFeature(attribute[k])
+            for (let j = 0; j < rowsNumber; j++)
+            {
+                vals[k][j] = parseFloat(x[j]);
             }
         }
 
-        for (let i = 0; i < atts.length; i++) {
-            let f1 = atts[i];
-            let max = 0;
+        let t;
+        for (t = 0; t < attribute.length; t++)
+        {
+            let feature1 = attribute[t];
+            let tempMax = 0;
             let jMax = 0;
 
             //find the most correlative
-            for (let j = i + 1; j < atts.length; j++) {
-                let p = Math.abs(parseFloat(this.#anomalyDetectionUtil.pearson(vals[i], vals[j])))
-                if (p > max) {
-                    max = p;
+            for (let j = t + 1; j < attribute.length; j++)
+            {
+                let pearson = Math.abs(parseFloat(this.#anomalyDetectionUtil.pearson(vals[t], vals[j])))
+                if (pearson > tempMax)
+                {
+                    tempMax = pearson;
                     jMax = j;
                 }
             }
 
-            let f2 = atts[jMax];
-            let ps = this.toPoints(ts.getRowValuesOfFeature(f1), ts.getRowValuesOfFeature(f2));
-            this.learnHelper(ts, max, f1, f2, ps);
+            let feature2 = attribute[jMax];
+            let ps = this.toPoints(timeSeries.getRowValuesOfFeature(feature1), timeSeries.getRowValuesOfFeature(feature2));
+            this.learnHelper(timeSeries, tempMax, feature1, feature2, ps);
         }
     }
 
-    toPoints(v1, v2) {
+    toPoints(v1, v2)
+    {
         let ps = new Array(v1.length)
-        for (let i = 0; i < v1.length; i++) {
+        for (let i = 0; i < v1.length; i++)
+        {
             ps[i] = new Point.Point(parseFloat(v1[i]), parseFloat(v2[i]));
         }
         return ps;
     }
 
-    detect(ts) {
+    detect(timeSeries)
+    {
         let anomaly = [];
-        for (let i = 0; i < this.#cf.length; i++) {
+        for (let i = 0; i < this.#cf.length; i++)
+        {
             let correlatedFeatures = this.#cf[i];
-            let x = ts.getRowValuesOfFeature(correlatedFeatures.feature1);
-            let y = ts.getRowValuesOfFeature(correlatedFeatures.feature2);
-            for (let j = 0; j < x.length; j++) {
-                if (this.isAnomalous(x[j], y[j], correlatedFeatures)) {
+            let x = timeSeries.getRowValuesOfFeature(correlatedFeatures.feature1);
+            let y = timeSeries.getRowValuesOfFeature(correlatedFeatures.feature2);
+            for (let j = 0; j < x.length; j++)
+            {
+                if (this.isAnomalous(x[j], y[j], correlatedFeatures))
+                {
                     let det = correlatedFeatures.feature1 + "-" + correlatedFeatures.feature2;
                     anomaly.push(new AnomalyReport(det,(j+1)));
                 }
@@ -77,43 +95,53 @@ class Linear {
         return anomaly;
     }
 
-    getCf() {
+    getCf()
+    {
         return this.#cf
     }
 
-    setCorrelationThreshold(newThreshold) {
+    setCorrelationThreshold(newThreshold)
+    {
         this.#threshold = newThreshold;
     }
 
-    learnHelper(ts, pearson, f1, f2, points) {
-        if (pearson > this.#threshold) {
-            let len = ts.getNumOfInfoLines();
+    learnHelper(timeSeries, pearson, feature1, feature2, points)
+    {
+        if (pearson > this.#threshold)
+        {
+            let len = timeSeries.getNumOfInfoLines();
             let c = new CorrelatedFeatures();
-            c.feature1 = f1;
-            c.feature2 = f2;
-            c.corrlation = parseFloat(pearson);
+            c.feature1 = feature1;
+            c.feature2 = feature2;
+            c.maxCorrlation = parseFloat(pearson);
             c.lin_reg = this.#anomalyDetectionUtil.linearRegression(points);
             c.threshold = this.findThreshold(points, len, c.lin_reg) * 1.1; // 10% increase
             this.#cf.push(c);
         }
     }
 //flout x , flout y .correlated features c
-    isAnomalous(x, y, c) {
+    isAnomalous(x, y, c)
+    {
         return (Math.abs(y - c.lin_reg.getValWithM(x)) > c.threshold);
     }
 
-    findThreshold(points, len, rl) {
+    findThreshold(points, len, rl)
+    {
         let max = 0;
-        for (let i = 0; i < len; i++) {
+        let i;
+        for (i = 0; i < len; i++)
+        {
             let d = Math.abs(parseFloat(points[i].y) - parseFloat(rl.getValWithM(parseFloat(points[i].x))))
-            if (d > max) {
+            if (d > max)
+            {
                 max = d;
             }
         }
         return max;
     }
 
-    getThreshold() {
+    getThreshold()
+    {
         return this.#threshold;
     }
 }

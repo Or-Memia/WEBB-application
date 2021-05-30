@@ -1,4 +1,5 @@
-function extractModules() {
+function extractModules()
+{
     const fs = require('fs')
     const TimeSeries = require('./Utils/TimeSeries')
     const linear = require('./linear')
@@ -107,7 +108,8 @@ function initValues(trainSet, testSetInput)
     return {Keys: Keys, vals: vals, testP: testP, trainTimeSeries: trainTimeSeries};
 }
 
-function splitCorrelated(anomalies, arr, corrFeatures) {
+function splitCorrelated(anomalies, arr, corrFeatures)
+{
     let m;
     for (m = 0; m < anomalies.length; m++) {
         let cureFeature = anomalies[m].information;
@@ -118,14 +120,19 @@ function splitCorrelated(anomalies, arr, corrFeatures) {
 
         // fill the arrays with the correct values of the anomalies and the line it happened
         let k;
-        for (k = 0; k < corrFeatures.length; k++) {
-            if (corrFeatures[k].feature1 !== feat[0]) {
-                if (corrFeatures[k].feature1 === feat[1]) {
+        for (k = 0; k < corrFeatures.length; k++)
+        {
+            if (corrFeatures[k].feature1 !== feat[0])
+            {
+                if (corrFeatures[k].feature1 === feat[1])
+                {
                     arr[m][0] = feat[1]
                     arr[m][1] = feat[0]
                     setTimeStep(arr, m, anomalies);
                 }
-            } else {
+            }
+            else
+            {
                 // fill each cell in the array
                 arr[m][0] = feat[0]
                 arr[m][1] = feat[1]
@@ -135,30 +142,39 @@ function splitCorrelated(anomalies, arr, corrFeatures) {
     }
 }
 
-function setCorrelated(Keys, topCorrelacted, corrFeatures) {
-    for (let i = 0; i < Keys.length; i++) {
+function setCorrelated(Keys, topCorrelacted, corrFeatures)
+{
+    for (let i = 0; i < Keys.length; i++)
+    {
         let currentFeature = Keys[i];
 
         // default case
-        if (currentFeature === Keys[0]) {
+        if (currentFeature === Keys[0])
+        {
             topCorrelacted.set(currentFeature, Keys[1]);
         } else {
             topCorrelacted.set(currentFeature, Keys[0]);
         }
 
-        for (let j = 0; j < corrFeatures.length; j++) {
-            if (corrFeatures[j].feature1 === currentFeature) {
+        for (let j = 0; j < corrFeatures.length; j++)
+        {
+            if (corrFeatures[j].feature1 === currentFeature)
+            {
                 topCorrelacted.set(currentFeature, corrFeatures[j].feature2);
             }
         }
     }
 }
 
-function whichAlgo(algoType, trainTimeSeries) {
+function whichAlgo(algoType, trainTimeSeries)
+{
     let algo;
-    if (algoType === 'linear') {
+    if (algoType === 'linear')
+    {
         algo = new linear();
-    } else if (algoType === 'hybrid') {
+    }
+    else if (algoType === 'hybrid')
+    {
         algo = new hybrid();
     }
     algo.learnNormal(trainTimeSeries)

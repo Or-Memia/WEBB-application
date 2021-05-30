@@ -1,13 +1,14 @@
-class CorrelatingFeatures {
+class CorrelatingFeatures
+{
     feature1
     feature2
-    corrlation
+    maxCorrlation
     lin_reg
     threshold
     cx
     cy
-    constructor() {
-    }
+    constructor()
+    {}
 }
 
 module.exports = CorrelatingFeatures;

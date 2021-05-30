@@ -3,7 +3,9 @@ const Line = require("./Utils/Line")
 class MathHelper
 {
     constructor()
-    {}
+    {
+
+    }
 //return the average of arrayX
     average(arrayX)
     {

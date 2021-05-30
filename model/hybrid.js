@@ -22,7 +22,7 @@ class Hybrid extends LinearAlgorithm {
             let corrFeatures = new CorrelatedFeatures()
             corrFeatures.feature1 = f1;
             corrFeatures.feature2 = f2;
-            corrFeatures.corrlation = pearson;
+            corrFeatures.maxCorrlation = pearson;
             corrFeatures.threshold = circle.radius * 1.1; // 10% increase
             corrFeatures.cx = circle.center.x;
             corrFeatures.cy = circle.center.y;
@@ -31,7 +31,7 @@ class Hybrid extends LinearAlgorithm {
     }
 //flout x , flout y .correlated features c
     isAnomalous(x, y, c) {
-        if (Math.abs(c.corrlation) > 0.9) {
+        if (Math.abs(c.maxCorrlation) > 0.9) {
             return super.isAnomalous(x, y, c);
         } else {
             let dis = Math.sqrt((Math.pow(x - c.x, 2) +
