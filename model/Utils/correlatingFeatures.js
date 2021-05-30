@@ -1,4 +1,4 @@
-class CorrelatedFeatures{
+class CorrelatingFeatures {
     feature1
     feature2
     corrlation
@@ -10,4 +10,4 @@ class CorrelatedFeatures{
     }
 }
 
-module.exports = CorrelatedFeatures;
+module.exports = CorrelatingFeatures;
