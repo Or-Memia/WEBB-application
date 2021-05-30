@@ -28,31 +28,12 @@ class Linear {
     #threshold
     #anomalyDetectionUtil
 
-
     constructor()
     {
         this.#cf = []
         this.#anomalyDetectionUtil = new mathHelper();
         this.#threshold = 0.9
         this.f = false;
-    }
-
-    learnNormal(timeSeries)
-    {
-        let attribute = timeSeries.getFeature()
-
-        //init vals
-        let vals = new Array(attribute.length)
-        let rowsNumber = timeSeries.getNumOfInfoLines()
-        let j;
-        for (j = 0; j < attribute.length; j++)
-        {
-            vals[j] = new Array(rowsNumber);
-        }
-
-        //fill vals
-        enterValuesToMatrix(attribute, timeSeries, rowsNumber, vals);
-        this.findMostCorrelative(attribute, vals, timeSeries);
     }
 
     findMostCorrelative(attribute, vals, timeSeries)
@@ -63,8 +44,6 @@ class Linear {
             let feature1 = attribute[t];
             let tempMax = 0;
             let jMax = 0;
-
-            //find the most correlative
             for (let j = t + 1; j < attribute.length; j++)
             {
                 let pearson = Math.abs(parseFloat(this.#anomalyDetectionUtil.pearson(vals[t], vals[j])))
@@ -81,12 +60,26 @@ class Linear {
         }
     }
 
-    toPoints(v1, v2)
+    learnNormal(timeSeries)
     {
-        let ps = new Array(v1.length)
-        for (let i = 0; i < v1.length; i++)
+        let attribute = timeSeries.getFeature()
+        let vals = new Array(attribute.length)
+        let rowsNumber = timeSeries.getNumOfInfoLines()
+        let j;
+        for (j = 0; j < attribute.length; j++)
         {
-            ps[i] = new Point.Point(parseFloat(v1[i]), parseFloat(v2[i]));
+            vals[j] = new Array(rowsNumber);
+        }
+        enterValuesToMatrix(attribute, timeSeries, rowsNumber, vals);
+        this.findMostCorrelative(attribute, vals, timeSeries);
+    }
+
+    toPoints(value1, value2)
+    {
+        let ps = new Array(value1.length)
+        for (let l = 0; l < value1.length; l++)
+        {
+            ps[l] = new Point.Point(parseFloat(value1[l]), parseFloat(value2[l]));
         }
         return ps;
     }
@@ -94,10 +87,10 @@ class Linear {
     detect(timeSeries)
     {
         let anomaly = [];
-        let i;
-        for (i = 0; i < this.#cf.length; i++)
+        let d;
+        for (d = 0; d < this.#cf.length; d++)
         {
-            let correlatedFeatures = this.#cf[i];
+            let correlatedFeatures = this.#cf[d];
             let x = timeSeries.getRowValuesOfFeature(correlatedFeatures.F1);
             let y = timeSeries.getRowValuesOfFeature(correlatedFeatures.F2);
             pushAnomaly.call(this, x, y, correlatedFeatures, anomaly);
@@ -109,11 +102,6 @@ class Linear {
     {
         return this.#cf
     }
-
-    // setCorrelationThreshold(newThreshold)
-    // {
-    //     this.#threshold = newThreshold;
-    // }
 
     learnHelper(timeSeries, pearson, feature1, feature2, points)
     {
