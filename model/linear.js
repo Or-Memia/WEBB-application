@@ -114,15 +114,15 @@ class Linear {
             c.feature1 = feature1;
             c.feature2 = feature2;
             c.maxCorrlation = parseFloat(pearson);
-            c.lin_reg = this.#anomalyDetectionUtil.linearRegression(points);
-            c.threshold = this.findThreshold(points, len, c.lin_reg) * 1.1; // 10% increase
+            c.linearRegression = this.#anomalyDetectionUtil.linearRegression(points);
+            c.threshold = this.findThreshold(points, len, c.linearRegression) * 1.1; // 10% increase
             this.#cf.push(c);
         }
     }
 //flout x , flout y .correlated features c
     isAnomalous(x, y, c)
     {
-        return (Math.abs(y - c.lin_reg.getValWithM(x)) > c.threshold);
+        return (Math.abs(y - c.linearRegression.getValWithM(x)) > c.threshold);
     }
 
     findThreshold(points, len, rl)

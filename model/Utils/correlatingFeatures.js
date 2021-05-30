@@ -3,10 +3,10 @@ class CorrelatingFeatures
     feature1
     feature2
     maxCorrlation
-    lin_reg
+    linearRegression
     threshold
-    cx
-    cy
+    x
+    y
     constructor()
     {}
 }

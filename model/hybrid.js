@@ -24,8 +24,8 @@ class Hybrid extends LinearAlgorithm {
             corrFeatures.feature2 = f2;
             corrFeatures.maxCorrlation = pearson;
             corrFeatures.threshold = circle.radius * 1.1; // 10% increase
-            corrFeatures.cx = circle.center.x;
-            corrFeatures.cy = circle.center.y;
+            corrFeatures.x = circle.center.x;
+            corrFeatures.y = circle.center.y;
             this.#cf.push(corrFeatures);
         }
     }
