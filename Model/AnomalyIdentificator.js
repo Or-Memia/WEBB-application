@@ -133,7 +133,6 @@ function splitCorrelated(anomalies, arr, corrFeatures)
             }
             else
             {
-                // fill each cell in the array
                 arr[m][0] = feat[0]
                 arr[m][1] = feat[1]
                 setTimeStep(arr, m, anomalies);
@@ -147,8 +146,6 @@ function setCorrelated(Keys, topCorrelacted, corrFeatures)
     for (let i = 0; i < Keys.length; i++)
     {
         let currentFeature = Keys[i];
-
-        // default case
         if (currentFeature === Keys[0])
         {
             topCorrelacted.set(currentFeature, Keys[1]);
@@ -212,4 +209,4 @@ const anomalyIdentificator = async (trainSet, testSetInput, algoType) =>
     };
 }
 
-module.exports.detectAnomalies = anomalyIdentificator
+module.exports.anomalyIdentificator = anomalyIdentificator

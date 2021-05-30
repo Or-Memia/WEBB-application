@@ -1,8 +1,8 @@
 class Circle{
     constructor(centerPoint, radius)
     {
-        this.center = centerPoint;
         this.radius = radius;
+        this.center = centerPoint;
     }
 }
 

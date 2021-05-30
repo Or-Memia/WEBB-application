@@ -1,12 +1,12 @@
 class CorrelatingFeatures
 {
-    F1
-    F2
-    maxCorrelation
     linearRegression
-    threshold
     x
     y
+    threshold
+    F2
+    F1
+    maxCorrelation
     constructor()
     {}
 }

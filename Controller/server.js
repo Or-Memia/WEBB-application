@@ -104,7 +104,7 @@ function appPostAnomalies()
     server.post('/', (req, res) => {
         //get values from View
         let {trainFile, testSetInput, algorithmType} = getRequestVals(req);
-        myModel.detectAnomalies(trainFile.data.toString(), testSetInput.data.toString(), algorithmType).then((result) => {
+        myModel.anomalyIdentificator(trainFile.data.toString(), testSetInput.data.toString(), algorithmType).then((result) => {
             res.contentType("application/json")
             res.send(JSON.stringify(result.anomalies))
             res.end()
