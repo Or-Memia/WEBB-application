@@ -58,15 +58,15 @@ class MathHelper {
     }
 
     // returns the deviation between point p and the Shapes
-    dev2(p, l) {
+    deviation(p, l) {
         let ret = p.y - l.f(p.x);
         return Math.abs(ret);
     }
 
     // returns the deviation between point p and the Shapes equation of the points
-    dev(p, points) {
+    secondDeviation(p, points) {
         const l = this.linearRegression(points);
-        return this.dev2(p, l);
+        return this.deviation(p, l);
     }
 }
 module.exports = MathHelper
