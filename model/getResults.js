@@ -1,7 +1,9 @@
-class GetResults {
-    constructor(description, timeStep) {
-        this.description = description
-        this.timeStep = timeStep
+class GetResults
+{
+    constructor(information, line)
+    {
+        this.line = line
+        this.information = information
     }
 }
 

@@ -71,7 +71,7 @@ function setMapValues(keys, keysAndValuesMap, values) {
 }
 
 function setTimeStep(anomaliesArray, i, anomalies) {
-    anomaliesArray[i][2] = anomalies[i].timeStep
+    anomaliesArray[i][2] = anomalies[i].line
 }
 
 const anomalyIdentificator = async (trainFile, testSetInput, type) => {
@@ -116,7 +116,7 @@ const anomalyIdentificator = async (trainFile, testSetInput, type) => {
 
     let anomaliesArray = new Array(anomalies.length)
     for (let i = 0; i < anomalies.length; i++) {
-        let currentFeature = anomalies[i].description;
+        let currentFeature = anomalies[i].information;
 
         // split the two correlative by '+'
         let features = currentFeature.split("+");

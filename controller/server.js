@@ -7,7 +7,7 @@ const resultsTableHtml =
     {
         "<>": "tr", "html":
             [
-                {"<>": "td", "html": "${description}"},
+                {"<>": "td", "html": "${information}"},
                 {"<>": "td", "style": "text-align: center", "html": "${timeStep}"},
             ]
     }
