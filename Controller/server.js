@@ -23,7 +23,7 @@ function importModules() {
     const myFetch = require('node-fetch')
     const convertJsonToHtml = require('node-json2html');
     const myFileUpload = require('express-fileupload')
-    const myModel = require('../model/AnomalyIdentificator')
+    const myModel = require('../Model/AnomalyIdentificator')
     const myExpress = require('express')
     const resultData = require('form-data')
     const myPath = require('path');
