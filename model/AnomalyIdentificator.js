@@ -104,38 +104,38 @@ function initValues(trainSet, testSetInput)
     let trainP = createCsvFile(info = trainSet.toString(), "train")
     let testP = createCsvFile(testSetInput.toString(), "anomaly")
     let trainTimeSeries = new TimeSeries(trainP);
-    return {keys: Keys, vals: vals, anomalyPath: testP, trainTimeSeries: trainTimeSeries};
+    return {Keys: Keys, vals: vals, testP: testP, trainTimeSeries: trainTimeSeries};
 }
 
-const anomalyIdentificator = async (trainSet, testSetInput, type) =>
+const anomalyIdentificator = async (trainSet, testSetInput, algoType) =>
 {
-    let {keys, vals, anomalyPath, trainTimeSeries} = initValues(trainSet, testSetInput);
-    let algorithm;
-    if (type === 'linear') {
-        algorithm = new linear();
-    } else if (type === 'hybrid')
+    let {Keys, vals, testP, trainTimeSeries} = initValues(trainSet, testSetInput);
+    let algo;
+    if (algoType === 'linear') {
+        algo = new linear();
+    } else if (algoType === 'hybrid')
     {
-        algorithm = new hybrid();
+        algo = new hybrid();
     }
-    algorithm.learnNormal(trainTimeSeries)
-    let corrFeatures = algorithm.getCf();
-    let tsAnomaly = new TimeSeries(anomalyPath);
-    let anomalies = algorithm.detect(tsAnomaly);
+    algo.learnNormal(trainTimeSeries)
+    let corrFeatures = algo.getCf();
+    let timeSeriesTest = new TimeSeries(testP);
+    let anomalies = algo.detect(timeSeriesTest);
 
-    let keysAndValuesMap = new Map()
-    setMapValues(keys, keysAndValuesMap, vals);
+    let valuesAndKey = new Map()
+    setMapValues(Keys, valuesAndKey, vals);
 
     let topCorrelacted = new Map()
-    for (let i = 0; i < keys.length; i++)
+    for (let i = 0; i < Keys.length; i++)
     {
-        let currentFeature = keys[i];
+        let currentFeature = Keys[i];
 
         // default case
-        if (currentFeature === keys[0])
+        if (currentFeature === Keys[0])
         {
-            topCorrelacted.set(currentFeature, keys[1]);
+            topCorrelacted.set(currentFeature, Keys[1]);
         } else {
-            topCorrelacted.set(currentFeature, keys[0]);
+            topCorrelacted.set(currentFeature, Keys[0]);
         }
 
         for (let j = 0; j < corrFeatures.length; j++)
@@ -177,7 +177,7 @@ const anomalyIdentificator = async (trainSet, testSetInput, type) =>
 
     return {
         anomalies: anomalies,
-        keys: keys,
+        keys: Keys,
         values: vals,
     };
 }
