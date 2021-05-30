@@ -68,7 +68,7 @@ class Linear {
             let x = ts.getRowValuesOfFeature(correlatedFeatures.feature1);
             let y = ts.getRowValuesOfFeature(correlatedFeatures.feature2);
             for (let j = 0; j < x.length; j++) {
-                if (this.isDetect(x[j], y[j], correlatedFeatures)) {
+                if (this.isAnomalous(x[j], y[j], correlatedFeatures)) {
                     let det = correlatedFeatures.feature1 + "-" + correlatedFeatures.feature2;
                     anomaly.push(new AnomalyReport(det,(j+1)));
                 }
@@ -98,7 +98,7 @@ class Linear {
         }
     }
 
-    isDetect(x, y, correlatedFeatures) {
+    isAnomalous(x, y, correlatedFeatures) {
         return (Math.abs(y - correlatedFeatures.lin_reg.getValWithM(x)) > correlatedFeatures.threshold);
     }
 

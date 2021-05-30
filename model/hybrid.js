@@ -30,9 +30,9 @@ class Hybrid extends LinearAlgorithm {
         }
     }
 
-    isDetect(x, y, correlatedFeatures) {
+    isAnomalous(x, y, correlatedFeatures) {
         if (Math.abs(correlatedFeatures.corrlation) > 0.9) {
-            return super.isDetect(x, y, correlatedFeatures);
+            return super.isAnomalous(x, y, correlatedFeatures);
         } else {
             let distance = Math.sqrt((Math.pow(x - correlatedFeatures.x, 2) +
                 Math.pow(y - correlatedFeatures.y, 2)));
